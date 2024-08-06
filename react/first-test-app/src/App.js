@@ -1,36 +1,35 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
-
-function Favorite(props){
-  return (
-    <ul>
-      <li>내가 좋아하는 색은 {props.color}</li>
-      <li>내가 좋아하는 음식은 {props.food}</li>
-      <li>내가 좋아하는 동물은 {props.animal}</li>
-      <li>내가 좋아하는 영화는 {props.movie}</li>
-    </ul>
-  )
-}
-
-class Cafe extends React.Component {
-  render(){
-    return (
-      <>
-        <p>내가 좋아하는 음료수는 {this.props.drink}</p>
-        <p>내가 좋아하는 디저트는 {this.props.dessert}</p>
-      </>
-    )
-  }
-}
-
-
+import { VillagerInfo, Villagers } from './components/Villagers';
 
 function App() {
+  const villager= [
+    {name : '릴리안', birthday : '5월 9일생'},
+    {name : '쭈니', birthday : '9월 29일생'},
+    {name : '아네사', birthday : '6월 23일생'},
+    {name : '리키', birthday : '6월 3일생'},
+    {name : '마티', birthday : '4월 16일생'},
+    {name : '스파크', birthday : '7월 9일생'},
+    {name : '레베카', birthday : '9월 10일생'},
+    {name : '미애', birthday : '3월 10일생'},
+    {name : '스피카', birthday : '9월 11일생'},
+    {name : '미첼', birthday : '5월 19일생'},
+]
+
+const [name, setName] = useState('릴리안')
+const [day, setDay] = useState('5월 9일생')
+
+const clickVillger = (e) => {
+  let vName = e.currentTarget.innerText
+  let vDay = e.currentTarget.lastChild.getAttribute('data-day')
+  setName(vName)
+  setDay(vDay)
+}
+
   return (
     <div className="App">
-      <Cafe drink="밀크티" dessert="당근케이크" />
-      <hr/>
-      <Cafe drink="자몽에이드" dessert="에그타르트" />
+      <Villagers villager={villager} click={clickVillger}/>
+      <VillagerInfo name={name} day={day}/>
     </div>
   );
 }
