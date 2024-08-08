@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>this study</title>
+    <style>
+        .btn-box {
+            background-color: pink;
+            width: 500px;
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+<div class="btn-box">
+    나는 버튼 박스
+    <button class="btn1">클릭1</button>
+    <button class="btn2">클릭2</button>
+</div>
+</body>
+<script>
+    // "use strict"
+
+    // 1. 객체 메서드에서 객체 자신을 의미
+    const obj = {
+        name : '고양이',
+        getName(){
+            console.log('객체 메서드의 this >>>', this);
+            console.log('객체 메서드의 속성 읽기 >>>', this.name);
+        },
+        fn1 : function () {
+            console.log('객체 익명 메서드 this>>', this);
+            console.log('객체 익명 메서드에서 객체 속성>>>', this.name);
+            
+        }, 
+        fn2 : () => {
+            console.log('객체 안 화살표 함수 this>>>', this);
+            console.log('객체 안 화살표 함수 객체 속성(this)', this.name);
+            console.log('객체 안 화살표 함수 객체 속성(객체명)', obj.name);
+        }
+    }
+
+    // obj.getName()
+    // obj.fn1()
+    // obj.fn2()
+
+    // 2. 전역에서는 window 객체
+    // console.log('전역에서 this >>>',this);
+    
+    function fn1() {
+        console.log('strict mode',this);
+    }
+
+    //fn1();
+
+    // (function() {
+    //    console.log('익명함수에서 strict mode this >>>', this);
+        
+    // })();
+
+    // (()=>{
+    //     console.log('화살표함수에서 strict mode this >>> ', this);
+    // })();
+
+    // const btn = document.querySelector('.btn')
+    
+    // btn.addEventListener('click', btnClick)
+    
+    function btnClick() {
+        console.log('이벤트 함수 this', this);
+    }
+    
+    // btn.addEventListener('click', ()=>{
+        //     console.log('이벤트 화살표 함수 this', this);
+        // })
+
+
+    const btnBx = document.querySelector('.btn-box')
+    const btn1 = document.querySelector('.btn1')
+    const btn2 = document.querySelector('.btn2')
+
+    btnBx.addEventListener('mouseenter', mouseEnter)
+
+    function mouseEnter() {
+        console.log('마우스 입장 이벤트 this',this);
+        btn1.onclick = function () {
+            console.log('일반 익명 함수 클릭 이벤트 this >>>', this);
+        }
+        btn2.onclick = () => {
+            console.log('화살표 함수 클릭 이벤트 this >>>', this);   
+        }
+    }
+
+</script>
+</html>
