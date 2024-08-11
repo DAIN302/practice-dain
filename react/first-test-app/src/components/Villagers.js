@@ -5,7 +5,7 @@ export const Villagers = ({villager, click}) => {
     <ul className='villager-list'>
         {
             villager.map((v,i)=>
-                <li key={i} onClick={click}>
+                <li key={i} onClick={click} data-list={v.id}>
                     <figure>
                         <img src={'./image/acnh/'+v.name+'1.png'} alt={v.name}/>
                     </figure>
