@@ -3,7 +3,7 @@ import React, {useReducer, useRef} from 'react'
 const initPeak = []
 
 const reducer = (state, action) => {
-  
+  return state[action - 1] = inputRef.current[action-1].value()
 }
 
 export default function StandardPeak() {
@@ -20,8 +20,8 @@ export default function StandardPeak() {
   return (
     <div>
       {
-        inputArr.map((number, index) => 
-          <input key={index} type='number' id={'std'+(index+1)} onBlur={stdArr} ref={el => inputRef.current[index] = el} />
+        inputArr.map((number) => 
+          <input key={number} type='number' id={'std'+(number)} onBlur={stdArr} ref={el => inputRef.current[number - 1] = el} />
         )
       }
     </div>
