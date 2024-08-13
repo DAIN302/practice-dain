@@ -1,5 +1,5 @@
 import React, {useReducer, useState} from 'react';
-import './App.css';
+import './styles/Villagers.scss'
 import { VillagerInfo, Villagers } from './components/Villagers';
 
 const villagers= [

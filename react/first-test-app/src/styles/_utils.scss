@@ -1,0 +1,4 @@
+@mixin listStyle($bgc, $radius) {
+    background-color: $bgc;
+    border-radius: $radius;
+}
