@@ -3,7 +3,9 @@ import React, {useReducer, useRef} from 'react'
 const initPeak = []
 
 const reducer = (state, action) => {
-  return state[action - 1] = inputRef.current[action-1].value()
+  console.log(action);
+  
+  // return state[action - 1] = inputRef.current[action-1].value()
 }
 
 export default function StandardPeak() {
@@ -16,6 +18,8 @@ export default function StandardPeak() {
     const stdArr = (e) => {
       let inputId = e.currentTarget.getAttribute('id')
       dispatch(inputId)
+      console.log(peak);
+      
     }
   return (
     <div>

@@ -11,10 +11,11 @@ function App() {
     
   }, [stdPeak])
 
-  const getStdResult = () => {
-      // let stdAvg = reduce((acc,cur, i, {length}) => i === length - 1?(acc+cur) / length : acc + cur, 0)
-      // let stdSD = 
-      // let stdRSD = 
+  function getStdResult(){
+    // let stdAvg = reduce((acc,cur, i, {length}) => i === length - 1?(acc+cur) / length : acc + cur, 0)
+    // let stdSD = 
+    // let stdRSD = 
+
   }
 
   return (
