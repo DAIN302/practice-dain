@@ -1,26 +1,26 @@
-import React, {useRef} from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { peakArr, stdAvg, stdSD, stdRSD } from '../store/stdValueSlice';
+import React, {useRef, useState} from 'react'
 
-export default function StandardPeak() {
+export default function StandardPeak({addPeak}) {
+    const [stdPeak, setStdPeak] =  useState([0,0,0,0,0,0])
+
     const inputRef = useRef([])
-    const stdArr = useSelector(state => state.stdValue.stdArr)
-    const dispatch = useDispatch();
 
     const inputArr = [1,2,3,4,5,6]
 
     const addPeakRes = (e, idx) => {
       const res = Number(e.target.value);
-      const peak = stdArr.map((v,i) => {
+      const peakarr = stdPeak.map((v,i)=>{
         if(i === idx) return res;
         else return v;
       })
-      
-      dispatch(peakArr(peak))
-      dispatch(stdAvg())   
-      dispatch(stdSD())   
-      dispatch(stdRSD())   
+
+      setStdPeak(peakarr) 
+      // 부모에게 전달
+      addPeak(peakarr)
     }
+
+    console.log('자식',stdPeak);
+    
 
   return (
     <div>
