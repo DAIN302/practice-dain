@@ -9,12 +9,13 @@
 .villager-list {
     list-style: none;
     display: flex;
-    max-width: 500px;
+    // max-width: 500px;
     flex-wrap: wrap;
     margin: 0 auto;
     gap : 0 10px;
     .villager {
-        width: 80px;
+        // width: 80px;
+        // aspect-ratio: 1/1;
         cursor: pointer;
         @each $name, $bgcolor, $color in $villagers {
             &.#{$name} {
