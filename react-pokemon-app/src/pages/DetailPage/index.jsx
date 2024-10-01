@@ -14,7 +14,7 @@ import DamageModal from "../../components/DamageModal";
 
 const DetailPage = () => {
   const [pokemon, setPokemon] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const params = useParams();
@@ -22,17 +22,18 @@ const DetailPage = () => {
   const baseUrl = `https://pokeapi.co/api/v2/pokemon/`;
 
   useEffect(() => {
-    fetchPokemonData();
-  }, []);
+    setIsLoading(true);
+    fetchPokemonData(pokemonId);
+  }, [pokemonId]);
 
   // 개별 포켓몬 데이터 가져오기
-  const fetchPokemonData = async () => {
-    const url = `${baseUrl}${pokemonId}`;
+  const fetchPokemonData = async (id) => {
+    const url = `${baseUrl}${id}`;
     try {
       const { data: pokemonData } = await axios.get(url);
 
       if (pokemonData) {
-        const { name, id, types, weight, height, stats, abilities } =
+        const { name, id, types, weight, height, stats, abilities, sprites } =
           pokemonData;
 
         // 이전 포켓몬, 다음 포켓몬 이름 가져오기
@@ -58,6 +59,8 @@ const DetailPage = () => {
           stats: formatPokemonStats(stats),
           DamageRelations,
           types: types.map((type) => type.type.name),
+          sprites: formatPokeSprites(sprites),
+          description: await getPokemonDescription(id),
         };
 
         setPokemon(formattedPokemonData);
@@ -67,6 +70,40 @@ const DetailPage = () => {
       console.error(error);
       setIsLoading(false);
     }
+  };
+
+  // 한글로 된 데이터 가져오기
+  const filterAndFormatDescription = (flavorText) => {
+    const koreanDescriptions = flavorText
+      ?.filter((text) => text.language.name === "ko")
+      .map((text) => text.flavor_text.replace(/\r|\n|\f/g, " "));
+
+    return koreanDescriptions;
+  };
+
+  // 포켓몬 설명 데이터
+  const getPokemonDescription = async (id) => {
+    const url = `https://pokeapi.co/api/v2/pokemon-species/${id}/`;
+    const { data: pokemonSpecies } = await axios.get(url);
+
+    const desc = filterAndFormatDescription(pokemonSpecies.flavor_text_entries);
+
+    return desc[Math.floor(Math.random() * desc.length)];
+  };
+
+  // sprites 데이터 가공
+  const formatPokeSprites = (sprites) => {
+    // 원본을 변경하지 않기 위해 새로 만들어서 할당
+    const newSprites = { ...sprites };
+
+    // Object.keys -> 키들만 배열에 담아줌
+    Object.keys(newSprites).forEach((key) => {
+      if (typeof newSprites[key] !== "string") {
+        delete newSprites[key]; // value type이 string 이 아닌 것들은 지우기
+      }
+    });
+
+    return Object.values(newSprites); // 값만 리턴
   };
 
   // stats 데이터 가공
@@ -232,14 +269,17 @@ const DetailPage = () => {
               </tbody>
             </table>
           </div>
-          {/* 데미지 관계 - 나중에 모달로 옮길 것 */}
-          {/* {pokemon.DamageRelations && (
-            <div className="w-10/20">
-              <h2 className={`text-base text-center font-semibold ${text}`}>
-                <DamageRelation damages={pokemon.DamageRelations} />
-              </h2>
-            </div>
-          )} */}
+          {/* 포켓몬 설명 */}
+          <h2 className={`text-base font-semibold ${text}`}>설명</h2>
+          <p className="text0md leading-4 font-sans text-zinc-200 max-w-[30rem] text-center">
+            {pokemon.description}
+          </p>
+          {/* 스프라이츠 이미지 */}
+          <div className="flex my-8 flex-wrap justify-center">
+            {pokemon.sprites.map((url, idx) => (
+              <img src={url} key={idx} alt="sprites" />
+            ))}
+          </div>
         </section>
       </div>
       {/* 데미지관계 모달 */}
