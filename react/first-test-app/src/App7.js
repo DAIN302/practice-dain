@@ -69,7 +69,8 @@ function App7() {
 }
 
 export default App7;
-이 코드에서는 const newArr = [...articles];를 사용하여 articles 배열의 복사본을 만듭니다. 이제 newArr을 수정해도 articles 배열에는 영향을 미치지 않으며, 리액트는 상태 변경을 감지하고 UI를 업데이트합니다.
+이 코드에서는 const newArr = [...articles];를 사용하여 articles 배열의 복사본을 만듭니다. 
+이제 newArr을 수정해도 articles 배열에는 영향을 미치지 않으며, 리액트는 상태 변경을 감지하고 UI를 업데이트합니다.
 
 
 
