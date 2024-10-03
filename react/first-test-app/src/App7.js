@@ -5,8 +5,12 @@ function App7() {
 
   const changeItem = () => {
     // const newArr = articles;
-    const newArr = [...articles];
-    newArr[0] = '여자옷추천';
+    // const newArr = [...articles];
+    // newArr[0] = '여자옷추천';
+    const newArr = articles.map((item, index) => {
+      if (index === 0) return '여자옷추천';
+      return item;
+    })
     setArticles(newArr);
   }
 
