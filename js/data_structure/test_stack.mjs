@@ -23,3 +23,8 @@ console.log(stack.peek().data); // 가장 위에 있는 데이터 1 출력
 stack.pop(); // 가장 위의 데이터 제거
 console.log(stack.peek().data); // 가장 위에 있는 데이터 2 출력
 console.log(stack.isEmpty());
+stack.pop(); // 가장 위의 데이터 제거
+stack.pop(); // 가장 위의 데이터 제거
+stack.pop(); // 가장 위의 데이터 제거
+console.log(stack.isEmpty());
+console.log(stack.pop()); // 빈 리스트를 pop 했기 때문에 null 값 출력
