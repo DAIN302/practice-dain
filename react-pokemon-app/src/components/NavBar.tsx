@@ -11,12 +11,17 @@ import {
   signOut,
 } from "firebase/auth";
 import app from "../firebase";
+import storage from "../utils/storage";
 
-const userDataFromStorage = localStorage.getItem("userData")
+// const userDataFromStorage = localStorage.getItem("userData")
+// const userDataFromStorage = storage.get<User>('userData');
+
 
 // 로그인 데이터 유지를 위해 로컬 스토리지의 데이터 가져오기
 // 새로고침 하더라도 로컬스토리지에 유저데이터가 있기 떄문에 로그인 유지 가능
-const initialUserData = userDataFromStorage ? JSON.parse(userDataFromStorage) : null;
+// const initialUserData = userDataFromStorage ? JSON.parse(userDataFromStorage) : null;
+const initialUserData = storage.get<User>('userData');
+
 
 const Navbar = () => {
   // 파이어베이스
@@ -58,7 +63,8 @@ const Navbar = () => {
         // console.log(result); // _UserCrendential 객체
         setUserData(result.user);
         // 로그인 데이터 유지를 위해 로컬스토리지에 유저 데이터 저장
-        localStorage.setItem("userData", JSON.stringify(result.user));
+        // localStorage.setItem("userData", JSON.stringify(result.user));
+        storage.set('userData', result.user);
       })
       .catch((error) => {
         console.error(error);
@@ -88,6 +94,7 @@ const Navbar = () => {
     // 파이어베이스에서 제공해주는 로그아웃 함수
     signOut(auth)
       .then(() => {
+        storage.remove('userData');
         setUserData(null);
       })
       .catch((error) => {
