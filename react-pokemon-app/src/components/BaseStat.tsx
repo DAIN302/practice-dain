@@ -1,15 +1,26 @@
 import React, { useRef } from "react";
 import { useEffect } from "react";
 
-const BaseStat = ({ valueStat, nameStat, type }) => {
+interface BaseStatProps {
+  valueStat: number;
+  nameStat: string;
+  type: string;
+}
+
+const BaseStat = ({ valueStat, nameStat, type }: BaseStatProps) => {
   const bg = `bg-${type}`;
 
-  const ref = useRef(null);
+  // ref 를 div element 에 주었기 때문에 HTMLDivElement 타입을 준다.
+  const ref = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     // stat만큼 배경색이 채워지게 하는 계산
     const setValueStat = ref.current;
     const calc = valueStat * (100 / 255);
-    setValueStat.style.width = calc + "%";
+    // type guard -> setValueStat 이 null 이 아닐때만 스타일 적용 시키기 위해 가드
+    if (setValueStat) {
+      setValueStat.style.width = calc + "%";
+    }
   }, []);
 
   return (

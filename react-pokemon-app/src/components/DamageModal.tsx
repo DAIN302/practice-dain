@@ -1,9 +1,15 @@
 import React, { useRef } from "react";
-import DamageRelation from "./DamageRelation";
+import DamageRelation from "./DamageRelation.tsx";
 import useOnClickOutside from "../hooks/useOnClickOutside";
+import { DamageRelations } from "../types/DamageRelationOfPokemonTypes.ts";
 
-const DamageModal = ({ setIsModalOpen, damages }) => {
-  const ref = useRef();
+interface DamageModalProps {
+  damages : DamageRelations[];
+  setIsModalOpen : React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const DamageModal = ({ setIsModalOpen, damages }:DamageModalProps) => {
+  const ref = useRef<HTMLDivElement>(null);
 
   // 모달 본문 바깥 클릭 시 모달창 닫기
   useOnClickOutside(ref, () => setIsModalOpen(false));

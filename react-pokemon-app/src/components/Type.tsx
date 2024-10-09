@@ -1,6 +1,11 @@
 import React from "react";
 
-const Type = ({ type, damageValue }) => {
+interface TypeProps {
+  type: string;
+  damageValue?: string;
+}
+
+const Type = ({ type, damageValue }: TypeProps) => {
   const bg = `bg-${type}`;
   return (
     <div
@@ -8,7 +13,7 @@ const Type = ({ type, damageValue }) => {
     >
       <span>{type}</span>
       {damageValue && (
-         <span className="bg-zinc-200/40 p-[0.125rem] rounded">
+        <span className="bg-zinc-200/40 p-[0.125rem] rounded">
           {damageValue}
         </span>
       )}

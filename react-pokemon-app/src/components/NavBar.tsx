@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 // 파이어베이스 사용을 위한 import
 import {
+  User
   getAuth,
   signInWithPopup,
   onAuthStateChanged,
@@ -11,11 +12,11 @@ import {
 } from "firebase/auth";
 import app from "../firebase";
 
+const userDataFromStorage = localStorage.getItem("userData")
+
 // 로그인 데이터 유지를 위해 로컬 스토리지의 데이터 가져오기
 // 새로고침 하더라도 로컬스토리지에 유저데이터가 있기 떄문에 로그인 유지 가능
-const initialUserData = localStorage.getItem("userData")
-  ? JSON.parse(localStorage.getItem("userData"))
-  : {};
+const initialUserData = userDataFromStorage ? JSON.parse(userDataFromStorage) : null;
 
 const Navbar = () => {
   // 파이어베이스
@@ -24,7 +25,7 @@ const Navbar = () => {
 
   // 스크롤에 따른 navbar 색상 변경을 위한 state
   const [show, setShow] = useState(false);
-  const [userData, setUserData] = useState(initialUserData);
+  const [userData, setUserData] = useState<User | null>(initialUserData);
 
   // 로그인 페이지에서만 로그인 버튼 보여주기 위한 pathname 읽어오기
   const { pathname } = useLocation();
@@ -87,7 +88,7 @@ const Navbar = () => {
     // 파이어베이스에서 제공해주는 로그아웃 함수
     signOut(auth)
       .then(() => {
-        setUserData({});
+        setUserData(null);
       })
       .catch((error) => {
         alert(error.message);
@@ -109,7 +110,9 @@ const Navbar = () => {
         <Login onClick={handleAuth}>로그인</Login>
       ) : (
         <SignOut>
-          <UserImage src={userData.photoURL} alt={"user photo"} />
+          { userData?.photoURL && 
+            <UserImage src={userData.photoURL} alt={"user photo"} />
+          }
           <DropDown>
             <span onClick={handleLogOut}>Sign Out</span>
           </DropDown>
@@ -192,7 +195,7 @@ const Logo = styled.a`
 `;
 
 // nav styled-component
-const NavWrapper = styled.nav`
+const NavWrapper = styled.nav<{ show: boolean }>`
   position: fixed;
   top: 0;
   left: 0;

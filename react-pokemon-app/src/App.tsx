@@ -3,7 +3,7 @@ import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import DetailPage from "./pages/DetailPage";
 import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar.tsx";
 
 const Layout = () => {
   return (

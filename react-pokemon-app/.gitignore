@@ -24,5 +24,6 @@ dist-ssr
 *.sw?
 
 firebase.js
+firebase.ts
 
 package-lock.json
