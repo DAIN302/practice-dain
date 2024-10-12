@@ -1,6 +1,8 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import './App.css';
 import { VillagerInfo, Villagers } from './components/Villagers';
+import DarkmodeToggle from './components/DarkmodeToggle';
+import { VillagerContext } from './context/VillagerContext';
 
 function App() {
   const villager= [
@@ -16,6 +18,8 @@ function App() {
     {name : '미첼', birthday : '5월 19일생'},
 ]
 
+const {theme, chgTheme} = useContext(VillagerContext);
+
 const [name, setName] = useState('릴리안')
 const [day, setDay] = useState('5월 9일생')
 
@@ -27,7 +31,8 @@ const clickVillger = (e) => {
 }
 
   return (
-    <div className="App">
+    <div className={`App ${theme}`}>
+      <DarkmodeToggle chgTheme={chgTheme}/>
       <Villagers villager={villager} click={clickVillger}/>
       <VillagerInfo name={name} day={day}/>
     </div>
