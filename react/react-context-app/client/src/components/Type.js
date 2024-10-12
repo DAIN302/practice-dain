@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Products from "./Products";
 import Options from "./Options";
+import ErrorBanner from "./ErrorBanner";
 
 const Type = ({ orderType }) => {
   const [items, setItems] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     loadItems(orderType);
@@ -16,6 +18,7 @@ const Type = ({ orderType }) => {
       setItems(response.data);
     } catch (error) {
       console.error(error);
+      setError(true);
     }
   };
 
@@ -28,6 +31,10 @@ const Type = ({ orderType }) => {
       imagePath={item.imagePath}
     />
   ));
+
+  if (error) {
+    return <ErrorBanner message="에러 발생" />;
+  }
 
   return (
     <div>

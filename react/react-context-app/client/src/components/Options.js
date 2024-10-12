@@ -1,8 +1,11 @@
 import React from 'react'
 
-const Options = () => {
+const Options = ({name}) => {
   return (
-    <div>Options</div>
+    <form>
+      <input type='checkbox' id={`${name}`}/>{" "}
+      <label htmlFor={`${name}`}>{name}</label>
+    </form>
   )
 }
 
