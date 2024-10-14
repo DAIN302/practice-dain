@@ -1,14 +1,16 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import JoinForm from './components/JoinForm'
+import JoinForm2 from './components/JoinForm2'
+import JoinForm3 from './components/JoinForm3'
 
 function App() {
   
 
   return (
     <>
-     
+      {/* <JoinForm /> */}
+      {/* <JoinForm2 /> */}
+      <JoinForm3 />
     </>
   )
 }
