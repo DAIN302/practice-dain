@@ -43,10 +43,7 @@ function App() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useGetTopRatedMovies();
-
-  console.log(data);
-  
+  } = useGetTopRatedMovies();  
 
   // loadmore 가 화면에 보이는 순간
   // 다시 fetchNextPage 호출
@@ -55,7 +52,9 @@ function App() {
   // inView 값이 바뀔때마다 호출
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
+      console.log(data);
       fetchNextPage();
+      
     }
   }, [inView]);
 
