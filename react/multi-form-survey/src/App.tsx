@@ -1,34 +1,21 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import MainLayout from './components/common/MainLayout'
+import Tabs, { Tab, TabList, TabPanel, TabpPanels } from './components/common/Tabs'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div className='bg-blue-400'>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1 className='bg-black text-white'>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <MainLayout>
+      <Tabs>
+        <TabList>
+          <Tab index={0}>tab1</Tab>
+          <Tab index={1}>tab2</Tab>
+        </TabList>
+        <TabpPanels>
+          <TabPanel index={0}>panel1</TabPanel>
+          <TabPanel index={1}>panel2</TabPanel>
+        </TabpPanels>
+      </Tabs>
+    </MainLayout>
   )
 }
 
