@@ -12,12 +12,14 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import useOutsideClick from "../../hooks/common/useOutsideClick";
 
 interface DropdownProps<T> {
+  defaultValue?: T;
   placeholder?: string;
   options: DropdownOption<T>[];
   onChange?: (value: T) => void;
 }
 
 export default function Dropdown<T>({
+  defaultValue,
   placeholder,
   options,
   onChange,
@@ -25,7 +27,11 @@ export default function Dropdown<T>({
   // 메뉴가 오픈된 상태
   const [opened, setOpened] = useState(false);
   // 선택된 데이터 정보 상태
-  const [selected, setSelected] = useState(-1); // 인덱스 값을 갖는다.
+  const [selected, setSelected] = useState(
+    defaultValue
+      ? options.findIndex((option) => option.value === defaultValue)
+      : -1
+  ); // 인덱스 값을 갖는다.
 
   // open, close handler -> 성능 최적화를 위해 useCallback 사용, 함수 한번 생성되고 재활용이 가능하기 때문
   const open = useCallback(() => setOpened(true), []);
@@ -102,7 +108,10 @@ function DropdownMenu() {
   const containerRef = useOutsideClick(close);
   // opened 가 true 일때만 렌더링
   return opened ? (
-    <div ref={containerRef as RefObject<HTMLDivElement>} className="absolute left-0 top-62 rounded-10 border-gray300 border flex flex-col min-w-197 bg-white">
+    <div
+      ref={containerRef as RefObject<HTMLDivElement>}
+      className="absolute left-0 top-62 rounded-10 border-gray300 border flex flex-col min-w-197 bg-white z-10"
+    >
       {options.map((option, index) => (
         <DropdownMenuItem
           key={`${option.value}`}
@@ -122,5 +131,12 @@ function DropdownMenuItem({
   label: ReactNode;
   onSelect: () => void;
 }) {
-  return <button onClick={onSelect} className="text-left p-14 border-b-1 border-gray300 last:border-b-0">{label}</button>;
+  return (
+    <button
+      onClick={onSelect}
+      className="text-left p-14 border-b-1 border-gray300 last:border-b-0"
+    >
+      {label}
+    </button>
+  );
 }
