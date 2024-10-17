@@ -1,4 +1,4 @@
-import React, {
+import {
   createContext,
   PropsWithChildren,
   ReactNode,
@@ -8,12 +8,13 @@ import React, {
 } from "react";
 
 interface DropdownProps<T> {
+  placeholder?: string;
   options: DropdownOption<T>[];
   onChange?: (value: T) => void;
 }
 
 export default function Dropdown<T>({
-  children,
+  placeholder,
   options,
   onChange,
 }: PropsWithChildren<DropdownProps<T>>) {
@@ -46,7 +47,8 @@ export default function Dropdown<T>({
         onChange: handleChange,
       }}
     >
-      {children}
+      <DropdownButton placeholder={placeholder} />
+      <DropdownMenu />
     </DropdownContext.Provider>
   );
 }
@@ -72,7 +74,7 @@ interface DropdownContextType<T = unknown> {
 const DropdownContext = createContext<DropdownContextType | null>(null);
 
 // 드롭다운 버튼 컴포넌트
-export function DropdownButton({ placeholder }: { placeholder?: string }) {
+function DropdownButton({ placeholder = "select" }: { placeholder?: string }) {
   const { open, options, selected } = useContext(DropdownContext)!;
 
   return (
@@ -83,7 +85,7 @@ export function DropdownButton({ placeholder }: { placeholder?: string }) {
 }
 
 // 드롭다운 메뉴
-export function DropdownMenu() {
+function DropdownMenu() {
   const { opened, options, onChange } = useContext(DropdownContext)!;
   // opened 가 true 일때만 렌더링
   return opened ? (
