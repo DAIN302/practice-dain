@@ -13,6 +13,7 @@ import Tabs, {
   TabPanel,
   TabpPanels,
 } from "./components/common/Tabs";
+import QuestionEditor from "./components/edit/QuestionEditor";
 
 function App() {
   return (
@@ -25,22 +26,7 @@ function App() {
         <TabpPanels>
           <TabPanel index={0}>
             <PanelCap>cap</PanelCap>
-            <Panel>
-              <PanelHeader>
-                헤더{" "}
-                <Dropdown
-                  options={[
-                    { label: <div>1</div>, value: "1" },
-                    { label: <div>2</div>, value: "2" },
-                    { label: <div>3</div>, value: "3" },
-                    { label: <div>4</div>, value: "4" },
-                  ]}
-                  onChange={(value) => console.log(value)}
-                />
-              </PanelHeader>
-              <PanelBody>바디</PanelBody>
-              <PanelFooter>푸터</PanelFooter>
-            </Panel>
+            <QuestionEditor />
           </TabPanel>
           <TabPanel index={1}>panel2</TabPanel>
         </TabpPanels>
