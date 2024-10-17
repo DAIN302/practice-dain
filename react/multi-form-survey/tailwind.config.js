@@ -13,6 +13,8 @@ export default {
     extend: {
       spacing: {...px0_201},
       borderWidth : {...px0_21},
+      borderRadius : {...px0_21},
+      fontSize:{...px0_201},
       colors
     },
   },
