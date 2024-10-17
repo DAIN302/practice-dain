@@ -1,8 +1,9 @@
-import {
+import React, {
   createContext,
   PropsWithChildren,
   ReactNode,
   useCallback,
+  useContext,
   useState,
 } from "react";
 
@@ -25,11 +26,14 @@ export default function Dropdown<T>({
   const open = useCallback(() => setOpened(true), []);
   const close = useCallback(() => setOpened(false), []);
 
-  const handleChange = useCallback((index: number) => {
-    setSelected(index);
-    onChange?.(options[index].value);
-    close();
-  }, [close, onChange, options]);
+  const handleChange = useCallback(
+    (index: number) => {
+      setSelected(index);
+      onChange?.(options[index].value);
+      close();
+    },
+    [close, onChange, options]
+  );
 
   return (
     <DropdownContext.Provider
@@ -66,3 +70,42 @@ interface DropdownContextType<T = unknown> {
 
 // 전역으로 관리하기 위해 context 사용
 const DropdownContext = createContext<DropdownContextType | null>(null);
+
+// 드롭다운 버튼 컴포넌트
+export function DropdownButton({ placeholder }: { placeholder?: string }) {
+  const { open, options, selected } = useContext(DropdownContext)!;
+
+  return (
+    <button onClick={open}>
+      {selected >= 0 ? options[selected].label : placeholder ?? ""}
+    </button>
+  );
+}
+
+// 드롭다운 메뉴
+export function DropdownMenu() {
+  const { opened, options, onChange } = useContext(DropdownContext)!;
+  // opened 가 true 일때만 렌더링
+  return opened ? (
+    <div>
+      {options.map((option, index) => (
+        <DropdownMenuItem
+          key={`${option.value}`}
+          label={option.label}
+          onSelect={() => onChange(index)}
+        />
+      ))}
+    </div>
+  ) : null;
+}
+
+// 드롭다운 메뉴에서 출력되는 아이템들
+function DropdownMenuItem({
+  label,
+  onSelect,
+}: {
+  label: ReactNode;
+  onSelect: () => void;
+}) {
+  return <button onClick={onSelect}>{label}</button>;
+}
