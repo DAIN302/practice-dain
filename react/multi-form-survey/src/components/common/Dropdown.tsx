@@ -2,10 +2,14 @@ import {
   createContext,
   PropsWithChildren,
   ReactNode,
+  RefObject,
   useCallback,
   useContext,
   useState,
 } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import useOutsideClick from "../../hooks/common/useOutsideClick";
 
 interface DropdownProps<T> {
   placeholder?: string;
@@ -47,8 +51,10 @@ export default function Dropdown<T>({
         onChange: handleChange,
       }}
     >
-      <DropdownButton placeholder={placeholder} />
-      <DropdownMenu />
+      <div className="text-left inline-block relative">
+        <DropdownButton placeholder={placeholder} />
+        <DropdownMenu />
+      </div>
     </DropdownContext.Provider>
   );
 }
@@ -78,18 +84,25 @@ function DropdownButton({ placeholder = "select" }: { placeholder?: string }) {
   const { open, options, selected } = useContext(DropdownContext)!;
 
   return (
-    <button onClick={open}>
+    <button
+      className="border-gray300 border rounded-10 min-w-197 p-14 pr-36 relative text-left"
+      onClick={open}
+    >
       {selected >= 0 ? options[selected].label : placeholder ?? ""}
+      <span className="absolute right-12 top-1/2 transform -translate-y-1/2">
+        <FontAwesomeIcon icon={faChevronDown} />
+      </span>
     </button>
   );
 }
 
 // 드롭다운 메뉴
 function DropdownMenu() {
-  const { opened, options, onChange } = useContext(DropdownContext)!;
+  const { close, opened, options, onChange } = useContext(DropdownContext)!;
+  const containerRef = useOutsideClick(close);
   // opened 가 true 일때만 렌더링
   return opened ? (
-    <div>
+    <div ref={containerRef as RefObject<HTMLDivElement>} className="absolute left-0 top-62 rounded-10 border-gray300 border flex flex-col min-w-197 bg-white">
       {options.map((option, index) => (
         <DropdownMenuItem
           key={`${option.value}`}
@@ -109,5 +122,5 @@ function DropdownMenuItem({
   label: ReactNode;
   onSelect: () => void;
 }) {
-  return <button onClick={onSelect}>{label}</button>;
+  return <button onClick={onSelect} className="text-left p-14 border-b-1 border-gray300 last:border-b-0">{label}</button>;
 }
