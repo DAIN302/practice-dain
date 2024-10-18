@@ -10,6 +10,9 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    screens : {
+      sm : '820px'
+    },
     extend: {
       spacing: {...px0_201},
       borderWidth : {...px0_21},

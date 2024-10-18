@@ -13,12 +13,14 @@ class SurveyStore {
     this.focusedSetionId = this.sections[0].id;
   }
 
+  // 섹션 추가
   addSection(){
     const section = new Section();
     this.sections.push(section);
     this.focusedSetionId = section.id;
   }
 
+  // 질문 추가
   addQuestion(){
     const section = this.sections.find(section => section.id === this.focusedSetionId);
     if(section){
