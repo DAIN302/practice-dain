@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import { QuestionType } from "../types/app";
 
-//mobx 
+// question 부분 mobx 설정
 type QuestionData = {
     id : number;
     title : string;

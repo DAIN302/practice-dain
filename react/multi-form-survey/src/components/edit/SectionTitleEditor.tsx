@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import Section from "../../models/section";
 import Input from "../common/Input";
 import Panel, { PanelBody, PanelCap } from "../common/Panel";
@@ -7,7 +8,7 @@ interface Props {
   section: Section;
 }
 
-export default function SectionTitleEditor({ capTitle, section }: Props) {
+const SectionTitleEditor = observer(function SectionTitleEditor({ capTitle, section }: Props) {
   return (
     <div>
       <PanelCap>{capTitle}</PanelCap>
@@ -27,4 +28,6 @@ export default function SectionTitleEditor({ capTitle, section }: Props) {
       </Panel>
     </div>
   );
-}
+})
+
+export default SectionTitleEditor;

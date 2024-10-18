@@ -1,6 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import Question from "./question";
 
+// section mobx 설정
 type SectionData = {
     id:number;
     title: string;

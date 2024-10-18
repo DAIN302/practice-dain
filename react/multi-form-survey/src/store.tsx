@@ -1,5 +1,4 @@
 import { makeAutoObservable } from "mobx";
-import Question from "./models/question";
 import { createContext, PropsWithChildren, useContext } from "react";
 import Section from "./models/section";
 

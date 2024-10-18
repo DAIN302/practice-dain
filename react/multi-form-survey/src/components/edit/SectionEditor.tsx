@@ -11,7 +11,7 @@ interface Props {
 const SectionEditor = observer(function SectionEditor({ section }: Props) {
   // mobX 의 observer -> 상태가 변경되었을 때 리렌더링 되도록 함
   return (
-    <div>
+    <div className="[&>*]:mb-20">
       <SectionTitleEditor section={section} capTitle="2개 중 1섹션" />
       {section.questions.map((question) => (
         <QuestionEditor key={question.id} question={question} />
