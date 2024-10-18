@@ -1,6 +1,5 @@
 import "./App.css";
 import MainLayout from "./components/common/MainLayout";
-import { PanelCap } from "./components/common/Panel";
 import Tabs, {
   Tab,
   TabList,
