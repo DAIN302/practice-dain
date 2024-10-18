@@ -1,5 +1,6 @@
 import express from "express";
 import {createServer as createViteServer} from 'vite';
+import surveyRouter from "./api/surveys";
 
 async function startServer() {
     const app = express();
@@ -7,6 +8,9 @@ async function startServer() {
 
     // 미들웨어 등록
     app.use(express.json());
+
+    // 라우터 등록
+    app.use('/api/surveys', surveyRouter);
 
     // 서버 생성
     const vite = await createViteServer({
