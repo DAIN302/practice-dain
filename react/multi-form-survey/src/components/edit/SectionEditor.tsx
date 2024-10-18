@@ -5,14 +5,21 @@ import SectionTitleEditor from "./SectionTitleEditor";
 
 interface Props {
   section: Section;
+  capTitle: string;
+  onChangeFocus : (id:number) => void;
 }
 
 // question editor 컨테이너 컴포넌트
-const SectionEditor = observer(function SectionEditor({ section }: Props) {
-  // mobX 의 observer -> 상태가 변경되었을 때 리렌더링 되도록 함
+// mobX 의 observer -> 상태가 변경되었을 때 리렌더링 되도록 함
+const SectionEditor = observer(function SectionEditor({ section, capTitle, onChangeFocus }: Props) {
+  // section 에 focus 가 이동되도록 하는 함수
+  const handleClickContainer = () => {
+    onChangeFocus(section.id)
+  }
+
   return (
-    <div className="[&>*]:mb-20">
-      <SectionTitleEditor section={section} capTitle="2개 중 1섹션" />
+    <div className="[&>*]:mb-20" onClick={handleClickContainer}>
+      <SectionTitleEditor section={section} capTitle={capTitle} />
       {section.questions.map((question) => (
         <QuestionEditor key={question.id} question={question} onCopy={section.copyQuestion} onDelete={section.removeQuestion}/>
       ))}

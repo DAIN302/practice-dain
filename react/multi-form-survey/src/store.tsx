@@ -8,7 +8,7 @@ class SurveyStore {
   focusedSetionId: number | null = null;
 
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable(this, {}, {autoBind:true});
     this.sections = [new Section()];
     this.focusedSetionId = this.sections[0].id;
   }
@@ -27,7 +27,13 @@ class SurveyStore {
         section.addQuestion();
     }
   }
+  
+  // focus 설정
+  setFocusSection(id:number) {
+    this.focusedSetionId = id;
+  }
 }
+
 
 // store 인스턴스 생성
 const surveyStore = new SurveyStore();
