@@ -1,6 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import { createContext, PropsWithChildren, useContext } from "react";
-import Section from "./models/section";
+import Section, { SectionData } from "./models/section";
+import callApi from "./utilis/api";
 
 // mobx store
 class SurveyStore {
@@ -31,6 +32,12 @@ class SurveyStore {
   // focus 설정
   setFocusSection(id:number) {
     this.focusedSetionId = id;
+  }
+
+  fetchSurvey(id:number){
+    callApi<{sections : SectionData[]}>(`/surveys/${id}`).then(({sections} => {
+      this.sections = sections.map(section => new Section(section))
+    }))
   }
 }
 

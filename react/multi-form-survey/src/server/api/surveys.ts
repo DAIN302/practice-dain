@@ -8,7 +8,7 @@ const router = express.Router();
 const storage = new JsonStorage(path.join(__dirname, '../data/surveys.json'));
 
 // api 설정
-router.get('/', (req, res)=>{
+router.get('/', (_req, res)=>{
     return res.json(storage.getAll());
 })
 
