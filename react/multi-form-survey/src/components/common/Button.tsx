@@ -13,7 +13,7 @@ export default function Button({
   return (
     <button
       className={cn(
-        "py-14 px-28 text-16 font-medium rounded-10",
+        "py-14 px-28 text-16 font-medium rounded-10 border",
         classes[variant],
         className
       )}

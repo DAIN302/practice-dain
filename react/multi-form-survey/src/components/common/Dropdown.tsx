@@ -28,7 +28,7 @@ export default function Dropdown<T>({
   const [opened, setOpened] = useState(false);
   // 선택된 데이터 정보 상태
   const [selected, setSelected] = useState(
-    defaultValue
+    defaultValue !== undefined
       ? options.findIndex((option) => option.value === defaultValue)
       : -1
   ); // 인덱스 값을 갖는다.

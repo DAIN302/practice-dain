@@ -1,19 +1,19 @@
 // api 호출 함수
 type ApiParams = {
-  method: "GET" | "POST" | "PUT" | "DELETE";
+  method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   body?: object;
   baseUrl?: string;
 };
 
 export default function callApi<Response>(
   path: string,
-  { method = "GET", baseUrl = "/api", body }: ApiParams
-) : Promise<Response> {
+  { method = 'GET', baseUrl = '/api', body }: ApiParams = {},
+): Promise<Response> {
   return fetch(`${baseUrl}${path}`, {
     method,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: body ? JSON.stringify(body) : undefined,
-  }).then((res) => res.json());
+  }).then(res => res.json());
 }
