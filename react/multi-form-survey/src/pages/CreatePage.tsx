@@ -1,5 +1,5 @@
 import { toJS } from "mobx";
-import SectionEditorList from "../components/edit/SectionEditorList";
+import SectionEditorList from "../components/edit/SectionListEditor";
 import { useSurveyStore } from "../store";
 import callApi from "../utilis/api";
 import Button from "../components/common/Button";

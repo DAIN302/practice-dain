@@ -4,7 +4,7 @@ import EditorMenu from "./EditorMenu";
 import SectionEditor from "./SectionEditor";
 
 // 섹션을 렌더링하는 컴포넌트
-const SectionEditorList = observer(function SectionEditorList() {
+const SectionListEditor = observer(function SectionListEditor() {
   const surveyStore = useSurveyStore();
 
   return (
@@ -20,4 +20,4 @@ const SectionEditorList = observer(function SectionEditorList() {
   );
 })
 
-export default SectionEditorList
+export default SectionListEditor
