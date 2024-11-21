@@ -1,34 +1,36 @@
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import { QuestionType } from "../../types/app";
 import Input from "../common/Input";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-regular-svg-icons";
+import Question from "../../models/question";
+import { observer } from "mobx-react-lite";
 
 interface OptionEditorProps {
-  type: QuestionType;
+  question: Question;
 }
-export default function OptionEditor({ type }: OptionEditorProps) {
-  const [options, setOptions] = useState<string[]>([""]);
+const OptionEditor = observer(function OptionEditor({
+  question: { options = [], type, setOption, setOptions },
+}: OptionEditorProps) {
   return (
     <div>
-      {options?.map((option, index) => (
+      {options.map((option, index) => (
         <div key={index} className="flex items-center">
           {icons[type]}
           <Input
             value={option}
             onChange={(e) => {
-              const newOptions = { ...options };
-              newOptions[index] = e.target.value;
-              setOptions(newOptions);
+              setOption(index, e.currentTarget.value);
             }}
           />
         </div>
       ))}
       <div className="flex items-center mt-28">
         {icons[type]}
-        <button className="text-gray500 text-16"
+        <button
+          className="text-gray500 text-16"
           onClick={() => {
-            setOptions((prev) => [...prev, ""]);
+            setOptions([...options, `옵션 ${options.length + 1}`]);
           }}
         >
           옵션추가
@@ -36,7 +38,8 @@ export default function OptionEditor({ type }: OptionEditorProps) {
       </div>
     </div>
   );
-}
+});
+export default OptionEditor;
 
 const icons: Partial<Record<QuestionType, ReactNode>> = {
   multipleChoice: <FontAwesomeIcon icon={faCircle} className="mr-14" />,

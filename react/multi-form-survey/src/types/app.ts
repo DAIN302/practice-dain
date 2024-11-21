@@ -1,1 +1,1 @@
-export type QuestionType = 'shortText' | 'longText' | 'multipleChoice' | 'checkbox' | 'dropdown' | 'data' | 'time';
+export type QuestionType = 'shortText' | 'longText' | 'multipleChoice' | 'checkbox' | 'dropdown' | 'date' | 'time';
