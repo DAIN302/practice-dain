@@ -4,7 +4,7 @@ import SectionView from "./SectionView";
 import { observer } from "mobx-react-lite";
 import { QuestionData, SectionData } from "../../types/app";
 import callApi from "../../utilis/api";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 const SectionListView = observer(function SectionListView() {
   const surveyStore = useSurveyStore();
@@ -14,15 +14,21 @@ const SectionListView = observer(function SectionListView() {
   >({});
   const last = currentSection === surveyStore.sections.length - 1;
   const { surveyId } = useParams<{ surveyId: string }>();
+  const navigate = useNavigate();
 
   // 다음으로 가기
-  const handleNext = () => {
+  const handleNext = async () => {
     if (last) {
       // submit
-      callApi(`/surveys/${surveyId}/responses`, {
+      await callApi(`/surveys/${surveyId}/responses`, {
         method: "POST",
         body: data.current,
       });
+
+      navigate(
+        `/surveys/${surveyId}/complete?title=${surveyStore.sections[0].title}`
+      );
+
       return;
     }
     setCurrentSection(currentSection + 1);
