@@ -23,7 +23,8 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "7.52.0",
     "react-router": "^6.25.1",
-    "react-router-dom": "^6.25.1"
+    "react-router-dom": "^6.25.1",
+    "recharts": "2.12.7"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",

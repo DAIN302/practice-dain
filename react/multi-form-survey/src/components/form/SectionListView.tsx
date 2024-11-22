@@ -3,7 +3,7 @@ import { useSurveyStore } from "../../store";
 import SectionView from "./SectionView";
 import { observer } from "mobx-react-lite";
 import { QuestionData, SectionData } from "../../types/app";
-import callApi from "../../utilis/api";
+import callApi from "../../utils/api";
 import { useNavigate, useParams } from "react-router";
 
 const SectionListView = observer(function SectionListView() {

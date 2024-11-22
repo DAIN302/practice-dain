@@ -13,11 +13,16 @@ const SectionListEditor = observer(function SectionListEditor() {
       <EditorMenu className="fixed bottom-30 left-[calc(100%-72px)] sm:bottom-auto sm:top-[263px] sm:left-[calc(50%+340px)]" />
       <div>
         {surveyStore.sections.map((section, index) => (
-          <SectionEditor key={section.id} section={section} onChangeFocus={surveyStore.setFocusSection} capTitle={`${surveyStore.sections.length}개 중 ${index+1} 섹션`}/>
+          <SectionEditor
+            key={section.id}
+            section={section}
+            onChangeFocus={surveyStore.setFocusSection}
+            capTitle={`${surveyStore.sections.length}개 중 ${index + 1} 섹션`}
+          />
         ))}
       </div>
     </div>
   );
-})
+});
 
-export default SectionListEditor
+export default SectionListEditor;

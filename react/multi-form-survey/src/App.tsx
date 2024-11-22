@@ -8,6 +8,7 @@ import CreatePage from "./pages/CreatePage";
 import EditPage from "./pages/EditPage";
 import FormPage from "./pages/FormPage";
 import CompletePage from "./pages/CompletePage";
+import StatisticsPage from "./pages/StatisticsPage";
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
             <Route path="/surveys/:surveyId" element={<FormPage />} />
             <Route path="/surveys/:surveyId" element={<AdminPage />}>
               <Route path="edit" element={<EditPage />} />
-              <Route path="responses" element={<div>응답</div>} />
+              <Route path="responses" element={<StatisticsPage />} />
             </Route>
             <Route
               path="/surveys/:surveyId/complete"

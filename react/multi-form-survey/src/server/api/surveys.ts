@@ -1,7 +1,8 @@
 import express from "express";
-import JsonStorage from "../../utilis/jsonStorage";
+import JsonStorage from "../../utils/jsonStorage";
 import path from "path";
-import { QuestionData, SectionData } from "../../types/app";
+import { SectionData, Statistics, SurveyResponse } from "../../types/app";
+import { getStatistics } from "../../utils/statistics";
 
 // 라우터 설정
 const router = express.Router();
@@ -11,11 +12,6 @@ const storage = new JsonStorage<{
   emailCollected: boolean;
   responses: SurveyResponse[];
 }>(path.join(__dirname, "../data/surveys.json"));
-
-type SurveyResponse = Record<
-  SectionData["id"],
-  Record<QuestionData["id"], string>
->;
 
 // api 설정
 router.get("/", (_req, res) => {
@@ -73,6 +69,22 @@ router.post("/:id/responses", (req, res) => {
   });
 
   return res.status(201).json({ message: "Response added" });
+});
+
+// 통계 데이터
+router.get("/:id/statistics", (req, res) => {
+  const id = Number(req.params.id);
+  const data = storage.get(id);
+
+  if (!data) {
+    return res.status(404).json({ message: "Not Found" });
+  }
+
+  const { responses, sections } = data;
+
+  const statistics: Statistics = getStatistics(responses, sections);
+
+  return res.json({ statistics, count: responses.length });
 });
 
 export default router;

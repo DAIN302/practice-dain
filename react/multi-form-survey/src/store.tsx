@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import { createContext, PropsWithChildren, useContext } from "react";
 import Section from "./models/section";
-import callApi from "./utilis/api";
+import callApi from "./utils/api";
 import { SectionData } from "./types/app";
 
 // mobx store

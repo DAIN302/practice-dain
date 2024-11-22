@@ -23,3 +23,13 @@ export type SectionData = {
   description: string;
   questions: Question[];
 };
+
+export type SurveyResponse = Record<
+  SectionData["id"],
+  Record<QuestionData["id"], string>
+>;
+
+export type Statistics = Record<
+  SectionData["id"],
+  Record<QuestionData["id"], string[] | Record<string, number>>
+>;

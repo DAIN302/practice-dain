@@ -1,7 +1,7 @@
 import { toJS } from "mobx";
 import SectionEditorList from "../components/edit/SectionListEditor";
 import { useSurveyStore } from "../store";
-import callApi from "../utilis/api";
+import callApi from "../utils/api";
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import Button from "../components/common/Button";

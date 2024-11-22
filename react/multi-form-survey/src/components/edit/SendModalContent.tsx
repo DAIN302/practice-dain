@@ -3,15 +3,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import Dropdown from "../common/Dropdown";
 import Button from "../common/Button";
-import callApi from "../../utilis/api";
+import callApi from "../../utils/api";
 
 interface Props {
   surveyId: number;
-  emailCollected : boolean;
+  emailCollected: boolean;
   onClose: () => void;
 }
 
-export default function SendModalContent({ surveyId, emailCollected, onClose }: Props) {
+export default function SendModalContent({
+  surveyId,
+  emailCollected,
+  onClose,
+}: Props) {
   const path = `${location.host}/surveys/${surveyId}`;
 
   const handleCopy = () => {
@@ -20,14 +24,14 @@ export default function SendModalContent({ surveyId, emailCollected, onClose }: 
     onClose();
   };
 
-  const handleChangeEmailCollected = (value:boolean) => {
+  const handleChangeEmailCollected = (value: boolean) => {
     callApi(`/survey/${surveyId}`, {
-        method : 'PATCH',
-        body : {
-            emailCollected : value,
-        }
-    })
-  }
+      method: "PATCH",
+      body: {
+        emailCollected: value,
+      },
+    });
+  };
 
   return (
     <Panel className="text-gray-900">
@@ -55,8 +59,12 @@ export default function SendModalContent({ surveyId, emailCollected, onClose }: 
         </div>
       </PanelBody>
       <PanelFooter className="flex justify-end mt-26">
-        <Button variant="tertiary"  onClick={onClose}>취소</Button>
-        <Button variant="secondary" onClick={handleCopy}>복사</Button>
+        <Button variant="tertiary" onClick={onClose}>
+          취소
+        </Button>
+        <Button variant="secondary" onClick={handleCopy}>
+          복사
+        </Button>
       </PanelFooter>
     </Panel>
   );
