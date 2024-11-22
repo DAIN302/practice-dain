@@ -1,14 +1,8 @@
 import { makeAutoObservable } from "mobx";
-import { QuestionType } from "../types/app";
+import { QuestionData, QuestionType } from "../types/app";
 
 // question 부분 mobx 설정
-type QuestionData = {
-  id: number;
-  title: string;
-  type: QuestionType;
-  required: boolean;
-  options?: string[];
-};
+
 
 export default class Question implements QuestionData {
   id: number;
