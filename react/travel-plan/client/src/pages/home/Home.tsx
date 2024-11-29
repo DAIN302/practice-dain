@@ -4,17 +4,16 @@ import CityList from "@/components/home/CityList";
 import FilterList from "@/components/home/FilterList";
 import SearchInput from "@/components/home/SearchInput";
 import { City } from "@/types";
-import { useState } from "react";
 
 export default function Home() {
   // const {data} = useQuery(국가필터, 검색필터)
-  const [search, setSearch] = useState('')
+//   const [search, setSearch] = useState('')
 
   return (
     <NarrowLayout className="flex flex-col items-center my-30">
       {/* 검색창 */}
       <div className="w-[339px] mb-24">
-        <SearchInput value={search} onChange={setSearch} onCompositionEnd={() => {}} />
+        <SearchInput onCompositionEnd={() => {}} />
       </div>
       {/* 국가필터 */}
       <div className="mb-21">
