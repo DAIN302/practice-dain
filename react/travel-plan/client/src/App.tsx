@@ -1,4 +1,4 @@
-import RegisterCity from "./components/admin/registerCity";
+import RegisterCity from "./components/admin/RegisterCity";
 
 function App() {
   return (
