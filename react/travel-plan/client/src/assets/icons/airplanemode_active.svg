@@ -1,0 +1,10 @@
+<svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="airplanemode_active">
+<mask id="mask0_5_691" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="21">
+<rect id="Bounding box" y="0.405731" width="20" height="20" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_5_691)">
+<path id="airplanemode_active_2" d="M7.08329 18.7391V17.4891L8.74996 16.2391V11.6557L1.66663 13.7391V12.0724L8.74996 7.90573V3.3224C8.74996 2.97517 8.87149 2.68003 9.11454 2.43698C9.3576 2.19392 9.65274 2.0724 9.99996 2.0724C10.3472 2.0724 10.6423 2.19392 10.8854 2.43698C11.1284 2.68003 11.25 2.97517 11.25 3.3224V7.90573L18.3333 12.0724V13.7391L11.25 11.6557V16.2391L12.9166 17.4891V18.7391L9.99996 17.9057L7.08329 18.7391Z" fill="#1C1B1F"/>
+</g>
+</g>
+</svg>
