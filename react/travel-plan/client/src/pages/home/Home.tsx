@@ -1,3 +1,5 @@
+import NarrowLayout from "@/components/common/NarrowLayout";
+import WideLayout from "@/components/common/WideLayout";
 import CityList from "@/components/home/CityList";
 import FilterList from "@/components/home/FilterList";
 import SearchInput from "@/components/home/SearchInput";
@@ -9,7 +11,7 @@ export default function Home() {
   const [search, setSearch] = useState('')
 
   return (
-    <div className="max-w-[655px] w-full mx-auto flex flex-col items-center">
+    <NarrowLayout className="flex flex-col items-center my-30">
       {/* 검색창 */}
       <div className="w-[339px] mb-24">
         <SearchInput value={search} onChange={setSearch} onCompositionEnd={() => {}} />
@@ -20,7 +22,7 @@ export default function Home() {
       </div>
       {/* 여행지 리스트 */}
       <CityList cities={DUMMY_DATA} />
-    </div>
+    </NarrowLayout>
   );
 }
 
