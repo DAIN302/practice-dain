@@ -1,13 +1,19 @@
 import { PropsWithChildren } from "react";
+import { createPortal } from "react-dom";
 
 // 모달 컴포넌트
 export default function Modal({ children }: PropsWithChildren) {
-  return <div className="fixed inset-0 w-full h-full">{children}</div>;
+  return createPortal(
+    <div className="fixed inset-0 w-full h-full">{children}</div>,
+    document.body
+  );
 }
 
 // 모달 뒷 배경
 export function ModalBackdrop() {
-  return <div className="fixed inset-0 w-full h-full bg-[rgba(1,1,1,0.50)] -z-10" />;
+  return (
+    <div className="fixed inset-0 w-full h-full bg-[rgba(1,1,1,0.50)] -z-10" />
+  );
 }
 
 // 모달 데이터를 담는 곳

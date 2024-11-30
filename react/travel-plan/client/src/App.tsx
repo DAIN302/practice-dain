@@ -3,6 +3,7 @@ import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Loading from "./components/common/Loading";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ModalProvider from "./components/common/ModalProvider";
 // import RegisterCity from "./pages/admin/RegisterCity";
 
 // lazy loading
@@ -29,6 +30,7 @@ function App() {
             </Route>
           </Routes>
         </Suspense>
+        <ModalProvider />
       </QueryClientProvider>
     </BrowserRouter>
   );

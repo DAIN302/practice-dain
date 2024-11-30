@@ -5,7 +5,6 @@ import CityList from "@/components/home/CityList";
 import FilterList from "@/components/home/FilterList";
 import SearchInput from "@/components/home/SearchInput";
 import { getCities, getSearchedCities } from "@/service/home";
-import { City } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
@@ -22,18 +21,20 @@ export default function Home() {
   return isLoading || !data ? (
     <Loading />
   ) : (
-    <NarrowLayout className="flex flex-col items-center my-30">
-      {/* 검색창 */}
-      <div className="w-[339px] mb-24">
-        <SearchInput onCompositionEnd={(value) => setQ(value)} />
-      </div>
-      {/* 국가필터 */}
-      <div className="mb-21">
-        <FilterList active="all" onChange={() => {}} />
-      </div>
-      {/* 여행지 리스트 */}
-      <CityList cities={data} />
-    </NarrowLayout>
+    <>
+      <NarrowLayout className="flex flex-col items-center my-30">
+        {/* 검색창 */}
+        <div className="w-[339px] mb-24">
+          <SearchInput onCompositionEnd={(value) => setQ(value)} />
+        </div>
+        {/* 국가필터 */}
+        <div className="mb-21">
+          <FilterList active="all" onChange={() => {}} />
+        </div>
+        {/* 여행지 리스트 */}
+        <CityList cities={data} />
+      </NarrowLayout>
+    </>
   );
 }
 
