@@ -1,7 +1,8 @@
-import './App.css';
+import "./App.css";
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Loading from "./components/common/Loading";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 // import RegisterCity from "./pages/admin/RegisterCity";
 
 // lazy loading
@@ -11,17 +12,24 @@ import Loading from "./components/common/Loading";
 // 네트워크 트래픽과 리소스 사용을 최적화할 수 있음
 const Home = lazy(() => import("./pages/home/Home"));
 const RegisterCity = lazy(() => import("./pages/admin/RegisterCity"));
+const RegisterCountry = lazy(() => import("./pages/admin/RegisterCountry"));
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
     <BrowserRouter>
-      <Suspense fallback={<Loading />}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/admin" />
-          <Route path="/register-city" element={<RegisterCity />} />
-        </Routes>
-      </Suspense>
+      <QueryClientProvider client={queryClient}>
+        <Suspense fallback={<Loading />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/admin">
+              <Route path="register-city" element={<RegisterCity />} />
+              <Route path="register-country" element={<RegisterCountry />} />
+            </Route>
+          </Routes>
+        </Suspense>
+      </QueryClientProvider>
     </BrowserRouter>
   );
 }

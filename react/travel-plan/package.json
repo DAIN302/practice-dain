@@ -6,12 +6,13 @@
   "scripts": {
     "dev": "concurrently \"yarn dev:client\" \"yarn dev:server\"",
     "dev:client": "vite",
-    "dev:server": "vite-node server/index.ts",
+    "dev:server": "vite-node --watch server/index.ts",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "5.29.2",
     "classnames": "2.5.1",
     "express": "4.19.2",
     "nedb": "1.8.0",

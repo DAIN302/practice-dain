@@ -1,30 +1,43 @@
+import Loading from "@/components/common/Loading";
 import NarrowLayout from "@/components/common/NarrowLayout";
 import WideLayout from "@/components/common/WideLayout";
 import CityList from "@/components/home/CityList";
 import FilterList from "@/components/home/FilterList";
 import SearchInput from "@/components/home/SearchInput";
+import { getCities, getSearchedCities } from "@/service/home";
 import { City } from "@/types";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function Home() {
-  // const {data} = useQuery(국가필터, 검색필터)
-//   const [search, setSearch] = useState('')
+  const [q, setQ] = useState("");
 
-  return (
+  // react-query
+  // const {data} = useQuery(국가필터, 검색필터)
+  const { isLoading, data } = useQuery({
+    queryKey: ["cities", q],
+    queryFn: q ? () => getSearchedCities(q) : getCities,
+  });
+
+  return isLoading || !data ? (
+    <Loading />
+  ) : (
     <NarrowLayout className="flex flex-col items-center my-30">
       {/* 검색창 */}
       <div className="w-[339px] mb-24">
-        <SearchInput onCompositionEnd={() => {}} />
+        <SearchInput onCompositionEnd={(value) => setQ(value)} />
       </div>
       {/* 국가필터 */}
       <div className="mb-21">
         <FilterList active="all" onChange={() => {}} />
       </div>
       {/* 여행지 리스트 */}
-      <CityList cities={DUMMY_DATA} />
+      <CityList cities={data} />
     </NarrowLayout>
   );
 }
 
+/*
 const DUMMY_DATA: City[] = [
   {
     city: "seoul",
@@ -63,3 +76,4 @@ const DUMMY_DATA: City[] = [
     thumbnail: "https://picsum.photos/300/200?random=6",
   },
 ];
+*/
