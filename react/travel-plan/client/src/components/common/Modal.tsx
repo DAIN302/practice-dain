@@ -1,5 +1,6 @@
 import { PropsWithChildren } from "react";
 import { createPortal } from "react-dom";
+import cn from "classnames";
 
 // 모달 컴포넌트
 export default function Modal({ children }: PropsWithChildren) {
@@ -17,10 +18,20 @@ export function ModalBackdrop() {
 }
 
 // 모달 데이터를 담는 곳
-export function ModalPanel({ children }: PropsWithChildren) {
+export function ModalPanel({
+  children,
+  className,
+}: PropsWithChildren<{ className?: string }>) {
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-10">
-      {children}
+    <div className="fixed inset-0 flex items-center justify-center z-10 ">
+      <div
+        className={cn(
+          "rounded-20 border border-gray100 bg-white p-28",
+          className
+        )}
+      >
+        {children}
+      </div>
     </div>
   );
 }

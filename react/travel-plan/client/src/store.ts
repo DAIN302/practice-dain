@@ -6,18 +6,22 @@ import { create } from "zustand";
 interface State {
   startDate: Date | null;
   endDate: Date | null;
+  status: "period_editing" | "planning";
 }
 
 type Action = {
-  setStartDate: (date: Date) => void;
-  setEndDate: (date: Date) => void;
+  setStartDate: (date: Date | null) => void;
+  setEndDate: (date: Date | null) => void;
+  setStatus: (status: State["status"]) => void;
 };
 
-export const store = create<State & Action>()((set) => ({
+export const usePlanStore = create<State & Action>()((set) => ({
   startDate: null,
   endDate: null,
+  status: "period_editing",
   setStartDate: (date) => set({ startDate: date }),
   setEndDate: (date) => set({ startDate: date }),
+  setStatus: (status) => set({ status }),
 }));
 
 // 모달 state
