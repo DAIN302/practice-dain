@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Loading from "./components/common/Loading";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ModalProvider from "./components/common/ModalProvider";
-// import RegisterCity from "./pages/admin/RegisterCity";
+import "@/utils/date";
 
 // lazy loading
 // 동적으로 로딩해두면 애플리케이션 초기 로딩 시에 필요 코드만 로드하고 나머지는
