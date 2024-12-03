@@ -50,7 +50,7 @@ export default function DailyTimeSelecotor() {
                   <td className="py-10">{format(dailyTime.date, "EEE")}</td>
                   <td className="py-10">
                     <input
-                      type="text"
+                      type="time"
                       value={dailyTime.startTime}
                       onChange={(e) => {
                         setDailyTime(index, e.currentTarget.value, "startTime");
@@ -59,7 +59,7 @@ export default function DailyTimeSelecotor() {
                   </td>
                   <td className="py-10">
                     <input
-                      type="text"
+                      type="time"
                       value={dailyTime.endTime}
                       onChange={(e) => {
                         setDailyTime(index, e.currentTarget.value, "endTime");
