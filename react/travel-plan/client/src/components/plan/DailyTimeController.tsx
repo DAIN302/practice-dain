@@ -5,7 +5,7 @@ import cn from "classnames";
 import { format } from "date-fns";
 import Button from "../common/Button";
 
-export default function DailyTimeSelecotor() {
+export default function DailyTimeController({onCompleted}:{onCompleted: () => void;}) {
   const [hidden, setHidden] = useState(false);
   const { dailyTimes, setDailyTime } = usePlanStore();
 
@@ -71,7 +71,7 @@ export default function DailyTimeSelecotor() {
             </tbody>
           </table>
           <div>
-            <Button className="px-47">시간 설정 완료</Button>
+            <Button className="px-47" onClick={onCompleted}>시간 설정 완료</Button>
           </div>
         </>
       )}
