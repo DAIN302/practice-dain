@@ -7,7 +7,7 @@ export interface City {
   timezone: string; // 도시의 타임존 예) Asia/Seoul
   flightHour: number; // 서울로부터 비행시간
   timezoneOffset: number; // 시차
-  coordinate: {
+  coordinates: {
     // 위도, 경도
     lat: number;
     lng: number;

@@ -8,7 +8,7 @@ export default defineConfig({
   root: "client",
   server: {
     proxy: {
-      "/api": "http://localhost:3000",
+      "/api": "http://localhost:8080",
     },
   },
   resolve: {

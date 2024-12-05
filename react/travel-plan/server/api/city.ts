@@ -86,26 +86,26 @@ cityRouter.get("/search", (req, res) => {
 });
 
 // 특정 하나의 도시
-cityRouter.get("/:city", (req, res) => {
+cityRouter.get('/:city', (req, res) => {
   // findOne -> 한개만 찾기
   citiesDB.findOne(
-    { city: req.params.city },
+    { code: req.params.city },
     (err: Error | null, city: City) => {
       if (err) {
         res.status(500).send(err);
       } else {
         // 국가 정보 데이터와 조합
-        countriesDB.findOne({ code: city.country }, (error, country) => {
-          if (error) {
-            return res.status(500).send(error);
+        countriesDB.findOne({ code: city.country }, (err, country) => {
+          if (err) {
+            return res.status(500).send(err);
           } else if (!country) {
-            return res.status(404).send("Country Not Found");
+            return res.status(404).send('Country not found');
           } else {
             return res.send({ ...city, country });
           }
         });
       }
-    }
+    },
   );
 });
 
