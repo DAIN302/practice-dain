@@ -17,7 +17,10 @@ interface Props {
 // 구글 맵 연동 컴포넌트
 export default function Map({ center, markers = [] }: Props) {
   return (
+    //  api 키 가져오기
     <LoadScript googleMapsApiKey={API_KEY}>
+        {/*  구글 맵 정보 가져오기 center에서 위도, 경도 정보 입력
+        zoom 으로 확대되는 정도 가져오기 */}
       <GoogleMap
         center={center}
         zoom={12}
