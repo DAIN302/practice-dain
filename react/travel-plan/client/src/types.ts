@@ -33,3 +33,18 @@ export interface Country {
     | "South America"
     | "Antarctica";
 }
+
+export interface Place {
+  name: string; // 장소 이름
+  thumbnail: string; // 장소 썸네일 이미지 url
+  category: "attraction" | "restaurant" | "cafe"; // 장소 카테고리
+  address: string; // 장소 주소
+  coordinates: {
+    // 위도, 경도
+    lat: number;
+    lng: number;
+  };
+  likes: number; // 장소 좋아요 수
+  rating: number; // 장소 평점
+  city: City["code"];
+}

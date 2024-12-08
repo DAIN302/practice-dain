@@ -3,6 +3,7 @@ import DailyTimeController from "./DailyTimeController";
 import PlanControllerHeader from "./PlanControllerHeader";
 import Wizard from "../common/Wizard";
 import { PropsWithChildren } from "react";
+import PlaceController from "./PlaceController";
 
 export default function PlanController() {
   const { startDate, endDate } = usePlanStore();
@@ -24,7 +25,7 @@ export default function PlanController() {
             title: "장소 선택",
             content: () => (
               <Layout startDate={startDate} endDate={endDate}>
-                <div>장소 선택</div>
+                <PlaceController />
               </Layout>
             ),
           },
@@ -52,7 +53,7 @@ function Layout({
   children,
 }: PropsWithChildren<{ startDate: Date | null; endDate: Date | null }>) {
   return (
-    <div className="px-24 py-30 flex flex-col gap-y-18">
+    <div className="px-24 py-30 flex flex-col gap-y-18 overflow-y-hidden h-full">
       <PlanControllerHeader startDate={startDate} endDate={endDate} />
       {children}
     </div>

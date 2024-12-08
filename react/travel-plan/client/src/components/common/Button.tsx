@@ -15,7 +15,7 @@ export default function Button({
     <button
       className={cn(
         classes[variant],
-        "text-16 font-medium rounded-6 py-14",
+        "text-14 font-medium rounded-6 py-14",
         className
       )}
       {...props}
