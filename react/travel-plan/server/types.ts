@@ -7,7 +7,7 @@ export interface City {
   timezone: string; // 도시의 타임존 예) Asia/Seoul
   flightHour: number; // 서울로부터 비행시간
   timezoneOffset: number; // 시차
-  coordinate: {
+  coordinates: {
     // 위도, 경도
     lat: number;
     lng: number;
@@ -25,11 +25,26 @@ export interface Country {
     duration: number; // 비자 유효 기간
   };
   continent: // 대륙 정보
-    | "Asia"
+  | "Asia"
     | "Europe"
     | "Africa"
     | "Oceania"
     | "North America"
     | "South America"
     | "Antarctica";
+}
+
+export interface Place {
+  name: string; // 장소 이름
+  thumbnail: string; // 장소 썸네일 이미지 url
+  category: "attraction" | "restaurant" | "cafe"; // 장소 카테고리
+  address: string; // 장소 주소
+  coordinates: {
+    // 위도, 경도
+    lat: number;
+    lng: number;
+  };
+  likes: number; // 장소 좋아요 수
+  rating: number; // 장소 평점
+  city: City["code"];
 }

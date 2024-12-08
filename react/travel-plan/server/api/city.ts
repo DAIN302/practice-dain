@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { City, Country } from "../types";
-import { citiesDB, countriesDB } from "../db";
+import { City, Country, Place } from "../types";
+import { citiesDB, countriesDB, placesDB } from "../db";
 
 // 라우터 설정
 const cityRouter = Router();
@@ -86,7 +86,7 @@ cityRouter.get("/search", (req, res) => {
 });
 
 // 특정 하나의 도시
-cityRouter.get('/:city', (req, res) => {
+cityRouter.get("/:city", (req, res) => {
   // findOne -> 한개만 찾기
   citiesDB.findOne(
     { code: req.params.city },
@@ -99,13 +99,13 @@ cityRouter.get('/:city', (req, res) => {
           if (err) {
             return res.status(500).send(err);
           } else if (!country) {
-            return res.status(404).send('Country not found');
+            return res.status(404).send("Country not found");
           } else {
             return res.send({ ...city, country });
           }
         });
       }
-    },
+    }
   );
 });
 
@@ -118,6 +118,42 @@ cityRouter.post("/", (req, res) => {
     } else {
       // 성공 시 생성된 데이터 넘겨줌
       res.send(doc);
+    }
+  });
+});
+
+// 장소 생성
+cityRouter.post("/:city/places", (req, res) => {
+  const place = req.body;
+  const city = req.params.city;
+
+  placesDB.insert({ ...place, city }, (err: Error | null, place: Place) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      res.send(place);
+    }
+  });
+});
+
+// 장소 리스트 검색
+// 필터와 검색이 되는 API
+cityRouter.get("/:city/places", (req, res) => {
+  const city = req.params.city;
+  const category = req.query.category as Place["category"];
+  const q = req.query.q as string;
+
+  const query = {
+    city,
+    ...(category ? { category } : {}), // category 가 있으면 city 와 category, 없으면 city 만
+    ...(q ? { name: new RegExp(q, "i") } : {}),
+  };
+
+  placesDB.find(query, (err: Error | null, places: Place[]) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.send(places);
     }
   });
 });
