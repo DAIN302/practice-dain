@@ -16,7 +16,6 @@ export default function SearchInput({ onSearch }: Props) {
     setSearch(value);
     throttle(() => {
       onSearch(value);
-      console.log(value);
     }, 300);
   };
 

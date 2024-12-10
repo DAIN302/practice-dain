@@ -2,13 +2,18 @@
 import { addDays, differenceInDays } from "date-fns";
 import { FunctionComponent } from "react";
 import { create } from "zustand";
+import { Place } from "./types";
 
-// 날짜 지정 state
+// 계획 state
 interface State {
   startDate: Date | null;
   endDate: Date | null;
   status: "period_editing" | "planning";
   dailyTimes: { startTime: string; endTime: string; date: Date }[];
+  plannedPlaces: {
+    place: Place;
+    duration: number; // minutes
+  }[];
 }
 
 type Action = {
@@ -20,13 +25,19 @@ type Action = {
     time: string,
     type: "startTime" | "endTime"
   ) => void;
+  addPlannedPlace: (place: Place, duration: number) => void;
+  removePlannedPlace: (index: number) => void;
+  setDurationForPlannedPlace: (index: number, duration: number) => void;
 };
 
 export const usePlanStore = create<State & Action>()((set, get) => ({
+  // state
   startDate: null,
   endDate: null,
   status: "period_editing",
   dailyTimes: [],
+  plannedPlaces: [],
+  // action
   setStartDate: (date) => set({ startDate: date }),
   setEndDate: (date) => {
     if (date) {
@@ -54,6 +65,20 @@ export const usePlanStore = create<State & Action>()((set, get) => ({
       ),
     }));
   },
+  addPlannedPlace: (place: Place, duration: number) =>
+    set((prev) => ({
+      plannedPlaces: [...prev.plannedPlaces, { place, duration }],
+    })),
+  removePlannedPlace: (index: number) =>
+    set((prev) => ({
+      plannedPlaces: prev.plannedPlaces.filter((_, i) => i !== index),
+    })),
+  setDurationForPlannedPlace: (index: number, duration: number) =>
+    set((prev) => ({
+      plannedPlaces: prev.plannedPlaces.map((place, i) =>
+        i === index ? { ...place, duration } : place
+      ),
+    })),
 }));
 
 // 모달 state
@@ -67,7 +92,9 @@ type ModalAction = {
 };
 
 export const useModalStore = create<ModalState & ModalAction>()((set) => ({
+  // state
   modals: [],
+  // action
   openModal: (modal) => set((state) => ({ modals: [...state.modals, modal] })),
   closeModal: (index) =>
     set((state) => ({ modals: state.modals.filter((_, i) => i !== index) })),
