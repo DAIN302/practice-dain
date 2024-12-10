@@ -1,7 +1,7 @@
 import Loading from "@/components/common/Loading";
 import WideLayout from "@/components/common/WideLayout";
-import Map from "@/components/plan/Map";
 import PlanController from "@/components/plan/PlanController";
+import PlanMapContainer from "@/components/plan/PlanMapContainer";
 import TravelPeriodModal from "@/components/plan/TravelPeriodModal";
 import { getCity } from "@/service/plan";
 import { usePlanStore } from "@/store";
@@ -29,7 +29,7 @@ export default function PlanCity() {
             <PlanController />
             {/* 지도 영역 */}
             <div className="flex-1 bg-gray300">
-              <Map center={data.coordinates} />
+              <PlanMapContainer coordinates={data.coordinates} />
             </div>
           </div>
         )}
