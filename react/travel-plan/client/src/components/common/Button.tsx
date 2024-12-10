@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes } from "react";
 import cn from "classnames";
 
 interface Props {
-  variant?: "primary";
+  variant?: "primary" | "action";
 }
 
 export default function Button({
@@ -15,7 +15,7 @@ export default function Button({
     <button
       className={cn(
         classes[variant],
-        "text-14 font-medium rounded-6 py-14",
+        "text-14 font-medium rounded-6",
         className
       )}
       {...props}
@@ -26,5 +26,6 @@ export default function Button({
 }
 
 const classes = {
-  primary: "bg-black text-white disabled:bg-gray200",
+  primary: "bg-black text-white disabled:bg-gray200 py-14",
+  action : "py-6 px-8 rounded-10 bg-main/10 text-main text-14 font-medium mr-5"
 };

@@ -7,19 +7,30 @@ import StarIcon from "@/assets/icons/grade.svg?react";
 
 interface Props {
   places: Place[];
+  onAddPlace: (place: Place) => void;
 }
 
-export default function PlaceList({ places }: Props) {
+export default function PlaceList({ places, onAddPlace }: Props) {
   return (
     <div className="flex flex-col overflow-y-scroll h-full">
       {places.map((place) => (
-        <PlaceItem key={`${place.city}_${place.name}`} place={place} />
+        <PlaceItem
+          key={`${place.city}_${place.name}`}
+          place={place}
+          onAddPlace={onAddPlace}
+        />
       ))}
     </div>
   );
 }
 
-function PlaceItem({ place }: { place: Place }) {
+function PlaceItem({
+  place,
+  onAddPlace,
+}: {
+  place: Place;
+  onAddPlace: (place: Place) => void;
+}) {
   return (
     <div className="flex gap-x-11 mb-24">
       {/* 썸네일 */}
@@ -53,7 +64,7 @@ function PlaceItem({ place }: { place: Place }) {
         </div>
       </div>
       {/* 추가 버튼 */}
-      <button className="relative">
+      <button className="relative" onClick={() => onAddPlace(place)}>
         <PlusRectIcon />
         <PlusIcon className="absolute top-1/2 transform -translate-y-1/2 left-1/2 -translate-x-1/2" />
       </button>

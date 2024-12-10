@@ -3,7 +3,8 @@ import PlannedPlaceList from "./PlannedPlaceList";
 import { usePlanStore } from "@/store";
 
 export default function PlaceController() {
-  const { plannedPlaces } = usePlanStore();
+  const { plannedPlaces, removePlannedPlace, setDurationForPlannedPlace } =
+    usePlanStore();
 
   return (
     <div className="flex flex-col text-left">
@@ -17,7 +18,11 @@ export default function PlaceController() {
       {plannedPlaces.length === 0 ? (
         <EmptyList />
       ) : (
-        <PlannedPlaceList plannedPlaces={plannedPlaces} />
+        <PlannedPlaceList
+          plannedPlaces={plannedPlaces}
+          onDeletePlace={removePlannedPlace}
+          onEditDuration={setDurationForPlannedPlace}
+        />
       )}
     </div>
   );
@@ -26,7 +31,9 @@ export default function PlaceController() {
 function EmptyList() {
   return (
     <div className="w-[430px] h-89 rounded-10 bg-bg">
-      <p className="mt-70 mx-auto text-14 text-gray500 text-center">장소를 선택해 주세요</p>
+      <p className="mt-70 mx-auto text-14 text-gray500 text-center">
+        장소를 선택해 주세요
+      </p>
     </div>
   );
 }

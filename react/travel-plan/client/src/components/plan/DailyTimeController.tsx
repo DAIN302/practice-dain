@@ -4,8 +4,13 @@ import { useState } from "react";
 import cn from "classnames";
 import { format } from "date-fns";
 import Button from "../common/Button";
+import { parseTime, printTime, transformTimeToMinutes } from "@/utils/time";
 
-export default function DailyTimeController({onCompleted}:{onCompleted: () => void;}) {
+export default function DailyTimeController({
+  onCompleted,
+}: {
+  onCompleted: () => void;
+}) {
   const [hidden, setHidden] = useState(false);
   const { dailyTimes, setDailyTime } = usePlanStore();
 
@@ -22,7 +27,9 @@ export default function DailyTimeController({onCompleted}:{onCompleted: () => vo
     <div className="text-left flex flex-col gap-y-18 w-[368px]">
       <p className="text-17 font-medium tracking-[0.17px] flex gap-x-16">
         <span>여행시간 상세 설명</span>
-        <span className="text-[#5A88FF]">{formatMinutesToTime(totalTime)}</span>
+        <span className="text-[#5A88FF]">
+          {printTime(parseTime(totalTime))}
+        </span>
         <button onClick={() => setHidden((prev) => !prev)}>
           <UpArrowIcon className={cn({ "rotate-180": !hidden })} />
         </button>
@@ -71,7 +78,9 @@ export default function DailyTimeController({onCompleted}:{onCompleted: () => vo
             </tbody>
           </table>
           <div>
-            <Button className="px-47" onClick={onCompleted}>시간 설정 완료</Button>
+            <Button className="px-47" onClick={onCompleted}>
+              시간 설정 완료
+            </Button>
           </div>
         </>
       )}
@@ -79,14 +88,4 @@ export default function DailyTimeController({onCompleted}:{onCompleted: () => vo
   );
 }
 
-// 분 단위로 환산해서 계산
-const transformTimeToMinutes = (time: string) => {
-  return parseInt(time.slice(0, 2), 10) * 60 + parseInt(time.slice(3), 10);
-};
 
-// 시 단위로 환산해서 계산
-const formatMinutesToTime = (minutes: number) => {
-  const hours = Math.floor(minutes / 60);
-  const remainMinutes = minutes % 60;
-  return `총 ${hours}시간 ${String(remainMinutes).padStart(2, "0")}분`;
-};

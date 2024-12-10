@@ -7,11 +7,14 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { getPlaces } from "@/service/plan";
 import Loading from "../common/Loading";
+import { usePlanStore } from "@/store";
 
 export default function PlaceContainer() {
   const { city } = useParams();
   const [q, setQ] = useState("");
   const [filter, setFilter] = useState<Place["category"] | null>(null);
+
+  const { addPlannedPlace } = usePlanStore();
 
   // react-query
   const { isLoading, data } = useQuery({
@@ -44,7 +47,7 @@ export default function PlaceContainer() {
       <PlaceFilter selected={filter} onFilter={handleFilter} />
       {/* 리스트 */}
       <div className="flex-1 overflow-y-hidden">
-        {isLoading || !data ? <Loading /> : <PlaceList places={data} />}
+        {isLoading || !data ? <Loading /> : <PlaceList places={data} onAddPlace={(place:Place) => addPlannedPlace(place, 120)} />}
       </div>
     </div>
   );
