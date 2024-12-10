@@ -13,6 +13,7 @@ export const parseTime = (minutes: number) => {
   };
 };
 
+// 시간 표시
 export const printTime = ({
   hours,
   minutes,
@@ -21,4 +22,22 @@ export const printTime = ({
   minutes: number;
 }) => {
   return `${hours}시간 ${minutes}분`;
+};
+
+// 누적 시간 함수
+export const getTotalTime = (
+  times: {
+    startTime: string;
+    endTime: string;
+  }[]
+) => {
+  return times.reduce((acc, dailyTime) => {
+    const dailyTotalTime =
+      transformTimeToMinutes(dailyTime.endTime) -
+      transformTimeToMinutes(dailyTime.startTime);
+
+    return acc + dailyTotalTime;
+  }, 0);
+
+  
 };

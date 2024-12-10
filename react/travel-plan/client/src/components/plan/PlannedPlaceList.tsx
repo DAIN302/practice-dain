@@ -66,11 +66,11 @@ function PlannedPlace({
               className="h-48 w-48 shrink-0 rounded-6 mr-12"
             />
             {/* 정보 */}
-            <div className="flex-1 mr-12">
+            <div className="flex-1 mr-12 overflow-hidden">
               <h6 className="text-15 font-semibold tracking-[0.15px] mb-8">
                 {plannedplace.place.name}
               </h6>
-              <p className="text-14 tracking-[0.14px] text-gray500">
+              <p className="text-14 tracking-[0.14px] text-gray500 overflow-hidden whitespace-nowrap text-ellipsis">
                 <span className="text-main font-medium mr-5">
                   {categories[plannedplace.place.category]}
                 </span>
@@ -78,10 +78,7 @@ function PlannedPlace({
               </p>
             </div>
             {/* 시간 버튼 */}
-            <Button
-              variant="action"
-              onClick={() => setEditing(true)}
-            >
+            <Button variant="action" className="shrink-0" onClick={() => setEditing(true)}>
               {`${hours}시간 ${minutes}분`}
             </Button>
             {/* 삭제 버튼 */}

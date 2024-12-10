@@ -4,7 +4,7 @@ import { useState } from "react";
 import cn from "classnames";
 import { format } from "date-fns";
 import Button from "../common/Button";
-import { parseTime, printTime, transformTimeToMinutes } from "@/utils/time";
+import { getTotalTime, parseTime, printTime } from "@/utils/time";
 
 export default function DailyTimeController({
   onCompleted,
@@ -14,21 +14,14 @@ export default function DailyTimeController({
   const [hidden, setHidden] = useState(false);
   const { dailyTimes, setDailyTime } = usePlanStore();
 
-  // 누적 시간 함수
-  const totalTime = dailyTimes.reduce((acc, dailyTime) => {
-    const dailyTotalTime =
-      transformTimeToMinutes(dailyTime.endTime) -
-      transformTimeToMinutes(dailyTime.startTime);
-
-    return acc + dailyTotalTime;
-  }, 0);
+  const totalTime = getTotalTime(dailyTimes)
 
   return (
     <div className="text-left flex flex-col gap-y-18 w-[368px]">
       <p className="text-17 font-medium tracking-[0.17px] flex gap-x-16">
         <span>여행시간 상세 설명</span>
         <span className="text-[#5A88FF]">
-          {printTime(parseTime(totalTime))}
+          총 {printTime(parseTime(totalTime))}
         </span>
         <button onClick={() => setHidden((prev) => !prev)}>
           <UpArrowIcon className={cn({ "rotate-180": !hidden })} />
