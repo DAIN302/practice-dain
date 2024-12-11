@@ -11,8 +11,7 @@ import { usePlanStore } from "@/store";
 export default function AccommodationContainer() {
   const { city } = useParams();
   const [q, setQ] = useState("");
-
-  const { addPlannedPlace } = usePlanStore();
+  const { addPlannedAccommodation } = usePlanStore();
 
   // react-query
   const { isLoading, data } = useQuery({
@@ -21,12 +20,11 @@ export default function AccommodationContainer() {
     queryFn: () => {
       const query = {
         ...(q ? { q } : {}),
-        ...({ category: "accommodation" }),
+        ...{ category: "accommodation" },
       };
       return getPlaces(city!, query);
     },
   });
-
 
   return (
     <div className="flex flex-col gap-y-18 h-full">
@@ -39,7 +37,7 @@ export default function AccommodationContainer() {
         ) : (
           <PlaceList
             places={data}
-            onAddPlace={(place: Place) => addPlannedPlace(place, 120)}
+            onAddPlace={(place: Place) => addPlannedAccommodation(place)}
           />
         )}
       </div>

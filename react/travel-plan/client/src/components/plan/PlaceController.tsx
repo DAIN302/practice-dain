@@ -12,7 +12,7 @@ export default function PlaceController() {
   return (
     <div className="flex flex-col text-left">
       <h5 className="flex items-end mb-13">
-        <span className="text-30 font-medium tracking=[0.3px] mr-8">0</span>
+        <span className="text-30 font-medium tracking=[0.3px] mr-8">{plannedPlaces.length}</span>
         <span className="text-15 tracking-[0.15px] mb-4">
         {printTime(parseTime(plannedTime))} /
         {printTime(parseTime(totalTime))}

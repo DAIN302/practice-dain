@@ -19,7 +19,7 @@ export default function PlanCity() {
 
   return (
     <>
-      {status === "period_editing" && <TravelPeriodModal />}
+      {status === "period_edit" && <TravelPeriodModal />}
       <WideLayout>
         {isLoading || !data ? (
           <Loading />

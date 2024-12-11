@@ -8,12 +8,13 @@ import { Place } from "./types";
 interface State {
   startDate: Date | null;
   endDate: Date | null;
-  status: "period_editing" | "planning";
+  status: "period_edit" | "planning";
   dailyTimes: { startTime: string; endTime: string; date: Date }[];
   plannedPlaces: {
     place: Place;
     duration: number; // minutes
   }[];
+  plannedAccommodations: Array<Place | null>;
 }
 
 type Action = {
@@ -28,15 +29,18 @@ type Action = {
   addPlannedPlace: (place: Place, duration: number) => void;
   removePlannedPlace: (index: number) => void;
   setDurationForPlannedPlace: (index: number, duration: number) => void;
+  addPlannedAccommodation: (place: Place) => void;
+  removePlannedAccommodation: (index: number) => void;
 };
 
 export const usePlanStore = create<State & Action>()((set, get) => ({
   // state
   startDate: null,
   endDate: null,
-  status: "period_editing",
+  status: "period_edit",
   dailyTimes: [],
   plannedPlaces: [],
+  plannedAccommodations: [],
   // action
   setStartDate: (date) => set({ startDate: date }),
   setEndDate: (date) => {
@@ -50,11 +54,15 @@ export const usePlanStore = create<State & Action>()((set, get) => ({
           date: addDays(startDate, i),
         };
       });
-      set({ dailyTimes, endDate: date });
+      set({
+        dailyTimes,
+        endDate: date,
+        plannedAccommodations: Array.from({ length: diff - 1 }, () => null),
+      });
       // date 가 어떤 값이 들어오더라도 같은 output 을 낸다.
     } else {
       // date 가 없으면 초기화
-      set({ endDate: date, dailyTimes: [] });
+      set({ endDate: date, dailyTimes: [], plannedAccommodations: [] });
     }
   },
   setStatus: (status) => set({ status }),
@@ -77,6 +85,26 @@ export const usePlanStore = create<State & Action>()((set, get) => ({
     set((prev) => ({
       plannedPlaces: prev.plannedPlaces.map((place, i) =>
         i === index ? { ...place, duration } : place
+      ),
+    })),
+  addPlannedAccommodation: (place: Place) =>
+    set((prev) => {
+      const index = prev.plannedAccommodations.findIndex((p) => p === null); // 현재 저장된 데이터가 null 인 첫번째 인덱스 저장
+      if (index === -1) {
+        // null 인 data 를 찾지 못할 경우
+        return prev; // 기존 state 와 동일한 state 리턴 -> 장소 리스트에 숙소 추가 X
+      }
+      return {
+        // i===index 면 새로 등록된 place 등록 아니라면 기존과 동일한 아이템 지정
+        plannedAccommodations: prev.plannedAccommodations.map((p, i) =>
+          i === index ? place : p
+        ),
+      };
+    }),
+  removePlannedAccommodation: (index: number) =>
+    set((prev) => ({
+      plannedAccommodations: prev.plannedAccommodations.map((p, i) =>
+        i === index ? null : p
       ),
     })),
 }));
