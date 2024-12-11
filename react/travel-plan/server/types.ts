@@ -37,7 +37,7 @@ export interface Country {
 export interface Place {
   name: string; // 장소 이름
   thumbnail: string; // 장소 썸네일 이미지 url
-  category: "attraction" | "restaurant" | "cafe"; // 장소 카테고리
+  category: "attraction" | "restaurant" | "cafe" | "accommodation"; // 장소 카테고리
   address: string; // 장소 주소
   coordinates: {
     // 위도, 경도

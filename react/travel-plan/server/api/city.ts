@@ -140,12 +140,18 @@ cityRouter.post("/:city/places", (req, res) => {
 // 필터와 검색이 되는 API
 cityRouter.get("/:city/places", (req, res) => {
   const city = req.params.city;
-  const category = req.query.category as Place["category"];
+  const category = req.query.category as
+    | Place["category"]
+    | Place["category"][]
+    | undefined;
   const q = req.query.q as string;
 
   const query = {
     city,
-    ...(category ? { category } : {}), // category 가 있으면 city 와 category, 없으면 city 만
+    ...(category
+      ? { category: { $in: Array.isArray(category) ? category : [category] } }
+      : // array 여부 체크 후, array 면 그대로 넣고, 아니면 array로 만들어서 넣기
+        {}), // category 가 있으면 city 와 category, 없으면 city 만
     ...(q ? { name: new RegExp(q, "i") } : {}),
   };
 
