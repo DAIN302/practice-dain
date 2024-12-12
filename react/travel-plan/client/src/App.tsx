@@ -5,6 +5,7 @@ import Loading from "./components/common/Loading";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ModalProvider from "./components/common/ModalProvider";
 import "@/utils/date";
+import { MapProvider } from "./components/plan/Map";
 
 // lazy loading
 // 동적으로 로딩해두면 애플리케이션 초기 로딩 시에 필요 코드만 로드하고 나머지는
@@ -16,6 +17,7 @@ const RegisterCity = lazy(() => import("./pages/admin/RegisterCity"));
 const RegisterCountry = lazy(() => import("./pages/admin/RegisterCountry"));
 const RegisterPlace = lazy(() => import("./pages/admin/RegisterPlace"));
 const PlanCity = lazy(() => import("./pages/plan/City"));
+const ItineraryCity = lazy(() => import("./pages/itinerary/City"));
 
 const queryClient = new QueryClient();
 
@@ -23,17 +25,20 @@ function App() {
   return (
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
-        <Suspense fallback={<Loading />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/admin">
-              <Route path="register-city" element={<RegisterCity />} />
-              <Route path="register-country" element={<RegisterCountry />} />
-              <Route path="register-place" element={<RegisterPlace />} />
-            </Route>
-            <Route path="/plan/:city" element={<PlanCity />} />
-          </Routes>
-        </Suspense>
+        <MapProvider>
+          <Suspense fallback={<Loading />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/admin">
+                <Route path="register-city" element={<RegisterCity />} />
+                <Route path="register-country" element={<RegisterCountry />} />
+                <Route path="register-place" element={<RegisterPlace />} />
+              </Route>
+              <Route path="/plan/:city" element={<PlanCity />} />
+              <Route path="/itinerary/:city" element={<ItineraryCity />} />
+            </Routes>
+          </Suspense>
+        </MapProvider>
         <ModalProvider />
       </QueryClientProvider>
     </BrowserRouter>

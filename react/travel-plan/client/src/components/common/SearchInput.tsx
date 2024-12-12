@@ -1,4 +1,4 @@
-import useThrottle from '@/hooks/useThrottle';
+import useThrottle from '@/hooks/common/useThrottle';
 import SearchIcon from '@icons/search.svg?react';
 import { ChangeEvent, useState } from 'react';
 

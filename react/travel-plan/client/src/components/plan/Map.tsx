@@ -1,8 +1,8 @@
 import {
   GoogleMap,
-  LoadScript,
   MarkerF,
   PolylineF,
+  useLoadScript,
 } from "@react-google-maps/api";
 import { PropsWithChildren } from "react";
 
@@ -20,22 +20,28 @@ interface Props {
   }[];
 }
 
+export function MapProvider({ children }: PropsWithChildren) {
+  // useLoadScript hook 으로 API key 가져오기
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: API_KEY,
+  });
+
+  if (!isLoaded) {
+    return null;
+  }
+
+  // map 이 로드되었을 때만 하위 칠드런 로드
+  return <>{children}</>;
+}
+
 // 구글 맵 연동 컴포넌트
 export default function Map({ center, children }: PropsWithChildren<Props>) {
   return (
-    //  api 키 가져오기
-    <LoadScript googleMapsApiKey={API_KEY}>
-      {/*  구글 맵 정보 가져오기 center에서 위도, 경도 정보 입력
-        zoom 으로 확대되는 정도 가져오기 */}
-      <GoogleMap
-        center={center}
-        zoom={12}
-        mapContainerClassName="w-full h-full"
-      >
-        {/* 지도에 마커 표시 */}
-        {children}
-      </GoogleMap>
-    </LoadScript>
+    // 구글 맵 정보 가져오기 center에서 위도, 경도 정보 입력 zoom 으로 확대되는 정도 가져오기
+    <GoogleMap center={center} zoom={12} mapContainerClassName="w-full h-full">
+      {/* 지도에 마커 표시 */}
+      {children}
+    </GoogleMap>
   );
 }
 

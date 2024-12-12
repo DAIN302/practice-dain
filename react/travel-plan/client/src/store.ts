@@ -5,7 +5,7 @@ import { create } from "zustand";
 import { Place } from "./types";
 
 // 계획 state
-interface State {
+export interface PlanState {
   startDate: Date | null;
   endDate: Date | null;
   status: "period_edit" | "planning";
@@ -20,7 +20,7 @@ interface State {
 type Action = {
   setStartDate: (date: Date | null) => void;
   setEndDate: (date: Date | null) => void;
-  setStatus: (status: State["status"]) => void;
+  setStatus: (status: PlanState["status"]) => void;
   setDailyTime: (
     index: number,
     time: string,
@@ -33,7 +33,7 @@ type Action = {
   removePlannedAccommodation: (index: number) => void;
 };
 
-export const usePlanStore = create<State & Action>()((set, get) => ({
+export const usePlanStore = create<PlanState & Action>()((set, get) => ({
   // state
   startDate: null,
   endDate: null,
