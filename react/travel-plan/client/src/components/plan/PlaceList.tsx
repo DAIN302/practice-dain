@@ -4,6 +4,7 @@ import PlusIcon from "@/assets/icons/plus.svg?react";
 import PlusRectIcon from "@/assets/icons/plus_rect.svg?react";
 import HeartIcon from "@/assets/icons/favorite.svg?react";
 import StarIcon from "@/assets/icons/grade.svg?react";
+import PlaceCategory from "../common/PlaceCategory";
 
 interface Props {
   places: Place[];
@@ -45,9 +46,10 @@ function PlaceItem({
           {place.name}
         </h6>
         <p className="text-14 tracking-[0.14px] text-gray500">
-          <span className="text-main font-medium">
-            {categories[place.category]}
-          </span>
+          <PlaceCategory
+            category={place.category}
+            className="text-14 tracking-[0.14px]"
+          />
           {place.address}
         </p>
         <div className="flex text-14 tracking-[0.14px] text-gray600">

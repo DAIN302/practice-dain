@@ -1,6 +1,6 @@
 import { usePlanStore } from "@/store";
 import DailyTimeController from "./DailyTimeController";
-import PlanControllerHeader from "./PlanControllerHeader";
+import ControllerHeader from "../shared/ControllerHeader";
 import Wizard from "../common/Wizard";
 import PlaceController from "./PlaceController";
 import PlaceContainer from "./PlaceContainer";
@@ -25,7 +25,7 @@ export default function PlanController() {
             title: "날짜 확인",
             content: ({ onNext }) => (
               <div className="px-24 py-30 flex flex-col gap-y-18 overflow-y-hidden h-full">
-                <PlanControllerHeader startDate={startDate} endDate={endDate} />
+                <ControllerHeader startDate={startDate} endDate={endDate} />
                 <DailyTimeController onCompleted={onNext} />
               </div>
             ),
@@ -36,7 +36,7 @@ export default function PlanController() {
               <div className="flex">
                 {/* 장소 선택 */}
                 <div className="px-24 py-30 flex flex-col gap-y-18 overflow-y-hidden h-full">
-                  <PlanControllerHeader
+                  <ControllerHeader
                     startDate={startDate}
                     endDate={endDate}
                   />
@@ -64,7 +64,7 @@ export default function PlanController() {
               <div className="flex">
                 {/* 숙소 선택 */}
                 <div className="px-24 py-30 flex flex-col gap-y-18 overflow-y-hidden h-full">
-                  <PlanControllerHeader
+                  <ControllerHeader
                     startDate={startDate}
                     endDate={endDate}
                   />

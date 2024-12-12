@@ -6,7 +6,7 @@ interface Props {
   endDate: Date | null;
 }
 
-export default function PlanControllerHeader({ startDate, endDate }: Props) {
+export default function ControllerHeader({ startDate, endDate }: Props) {
   return (
     <div className="text-left">
       {/* 타이틀 */}
