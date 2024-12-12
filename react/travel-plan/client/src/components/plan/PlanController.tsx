@@ -6,14 +6,20 @@ import PlaceController from "./PlaceController";
 import PlaceContainer from "./PlaceContainer";
 import AccommodationContainer from "./AccommodationContainer";
 import AccommodationController from "./AccommodationController";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function PlanController() {
   const { startDate, endDate } = usePlanStore();
+  const { city: cityId } = useParams();
+  const navigate = useNavigate();
 
   return (
     <div className="h-full flex">
       {/* step 선택 영역 */}
       <Wizard
+        onCompleted={() => {
+          navigate(`/itinerary/${cityId}`);
+        }}
         steps={[
           {
             title: "날짜 확인",
@@ -56,7 +62,7 @@ export default function PlanController() {
             title: "숙소 선택",
             content: () => (
               <div className="flex">
-                {/* 장소 선택 */}
+                {/* 숙소 선택 */}
                 <div className="px-24 py-30 flex flex-col gap-y-18 overflow-y-hidden h-full">
                   <PlanControllerHeader
                     startDate={startDate}

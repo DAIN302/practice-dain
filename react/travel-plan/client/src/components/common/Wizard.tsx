@@ -9,11 +9,12 @@ type Step = {
 
 interface Props {
   steps: Step[];
+  onCompleted?: () => void;
 }
 
 // 내부에 현재 스텝이 몇번째인지 currentIndex 정보가 있어야 함
 // 그 정보가 내부에서만 쓰이는지 외부에서도 쓰이는지에 따라서 상태 관리를 다르게 해주면 됨
-export default function Wizard({ steps }: Props) {
+export default function Wizard({ steps, onCompleted }: Props) {
   const [currentStep, setCurrentStep] = useState(0);
 
   const onNext = () => {
@@ -26,6 +27,7 @@ export default function Wizard({ steps }: Props) {
         steps={steps}
         currentStep={currentStep}
         onChangeStep={setCurrentStep}
+        onCompleted={onCompleted}
       />
       {steps[currentStep].content({ onNext })}
     </div>
@@ -36,10 +38,12 @@ function Steps({
   steps,
   currentStep,
   onChangeStep,
+  onCompleted,
 }: {
   steps: Step[];
   currentStep: number;
   onChangeStep: (index: number) => void;
+  onCompleted?: () => void;
 }) {
   return (
     <div className="flex flex-col justify-between items-center py-50 px-20 w-140">
@@ -62,8 +66,15 @@ function Steps({
           );
         })}
       </ul>
-      {currentStep < steps.length - 1 && (
-        <Button className="px-36 w-full" onClick={() => onChangeStep(currentStep + 1)}>
+      {(currentStep < steps.length - 1 || onCompleted) && (
+        <Button
+          className="px-36"
+          onClick={() =>
+            currentStep < steps.length - 1
+              ? onChangeStep(currentStep + 1)
+              : onCompleted?.()
+          }
+        >
           다음
         </Button>
       )}

@@ -1,10 +1,11 @@
-import { PlanState, usePlanStore } from "@/store";
+import { PlanState } from "@/store";
 import { transformTimeToMinutes } from "@/utils/time";
 
+// 커스텀 훅
 export default function useGenerateItinerary() {
-  const { plannedPlaces, dailyTimes } = usePlanStore();
-
-  return generateItinerary(plannedPlaces, dailyTimes);
+  return {
+    generateItinerary,
+  };
 }
 
 // 거리 계산
