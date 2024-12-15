@@ -1,5 +1,6 @@
 import { PlanState } from "@/store";
-import { transformTimeToMinutes } from "@/utils/time";
+import { ItineraryItem } from "@/types";
+import { parseTime, timeToString, transformTimeToMinutes } from "@/utils/time";
 
 // 커스텀 훅
 export default function useGenerateItinerary() {
@@ -47,13 +48,13 @@ async function generateItinerary(
   const route = findOptimalRoute(matrix);
 
   // 총 여행 시간
-  const times = dailyTimes.map(({ startTime, endTime }) => {
-    const start = transformTimeToMinutes(startTime);
-    const end = transformTimeToMinutes(endTime);
-    return end - start;
-  });
+  // const times = dailyTimes.map(({ startTime, endTime }) => {
+  //   const start = transformTimeToMinutes(startTime);
+  //   const end = transformTimeToMinutes(endTime);
+  //   return end - start;
+  // });
 
-  const itinerary = groupPlacesByDay({ route, places, matrix }, times);
+  const itinerary = groupPlacesByDay({ route, places, matrix }, dailyTimes);
 
   return itinerary;
 }
@@ -120,15 +121,26 @@ function groupPlacesByDay(
     places: PlanState["plannedPlaces"];
     matrix: google.maps.DistanceMatrixResponse;
   },
-  times: number[]
+  dailyTimes: PlanState["dailyTimes"]
 ) {
-  const itineraray: PlanState["plannedPlaces"][] = [];
+  const itinerary: ItineraryItem[][] = [];
   let dailyDuration = 0;
+  let dailyTime = getDailyTimes(dailyTimes[0]);
 
   route.forEach((placeIndex, index) => {
-    if (itineraray.length === 0) {
+    if (itinerary.length === 0) {
+      const endTime =
+        transformTimeToMinutes(dailyTimes[0].startTime) +
+        places[placeIndex].duration;
       // 처음 경로 추가
-      itineraray.push([places[placeIndex]]);
+      itinerary.push([
+        {
+          ...places[placeIndex],
+          startTime: dailyTimes[0].startTime,
+          endTime: timeToString(parseTime(endTime)),
+          duration: places[placeIndex].duration,
+        },
+      ]);
       // duration 값 누적
       dailyDuration = places[placeIndex].duration;
       return;
@@ -136,7 +148,7 @@ function groupPlacesByDay(
 
     // 경로에 등록된 마지막 장소 가져오기
     // 현재 일자
-    const day = itineraray[itineraray.length - 1];
+    const day = itinerary[itinerary.length - 1];
     const lastPlaceIndex = route[index - 1];
     // 직전에 등록된 장소부터 현재 등록된 장소까지의 거리 구하기
     const distance =
@@ -149,33 +161,65 @@ function groupPlacesByDay(
     dailyDuration += duration;
 
     // 거리가 10km 가 넘고, 일정 시간 넘으면 새로운 날로 등록하게 설정
-    if (distance > THRESHOLD || dailyDuration > times[itineraray.length - 1]) {
-      itineraray.push([places[placeIndex]]);
+    if (distance > THRESHOLD || dailyDuration > dailyTime) {
+      dailyTime = getDailyTimes(dailyTimes[itinerary.length]);
+      const endTime =
+        transformTimeToMinutes(dailyTimes[0].startTime) +
+        places[placeIndex].duration;
+
+      itinerary.push([
+        {
+          ...places[placeIndex],
+          startTime: dailyTimes[itinerary.length].startTime,
+          endTime: timeToString(parseTime(endTime)),
+        },
+      ]);
       dailyDuration = places[placeIndex].duration;
     } else {
-      day.push(places[placeIndex]);
+      const startTime =
+        transformTimeToMinutes(dailyTimes[itinerary.length - 1].startTime) +
+        dailyDuration;
+      const endTime = startTime + places[placeIndex].duration;
+      day.push({
+        ...places[placeIndex],
+        startTime: timeToString(parseTime(startTime)),
+        endTime: timeToString(parseTime(endTime)),
+      });
+      dailyDuration += places[placeIndex].duration;
     }
   });
 
   // 사용자가 설정한 장소가 모자라서 여행 일정을 채울 수 없는 경우
-  while (itineraray.length < times.length) {
+  while (itinerary.length < dailyTimes.length) {
     // 장소 계획들을 나눠주는 작업 -> 가장 많이 계획이 등록된 날의 계획을 반으로 쪼개주기
-    const max = itineraray.reduce((acc, day, index) => {
-      if (day.length > itineraray[acc].length) {
+    const max = itinerary.reduce((acc, day, index) => {
+      if (day.length > itinerary[acc].length) {
         return index;
       }
       return acc;
     }, 0);
 
-    if (itineraray[max].length === 1) {
+    if (itinerary[max].length === 1) {
       break;
     }
 
-    const day = itineraray[max];
+    const day = itinerary[max];
     const half = Math.floor(day.length / 2);
-    itineraray[max] = day.slice(0, half);
-    itineraray.push(day.slice(half));
+    itinerary[max] = day.slice(0, half);
+    itinerary.push(day.slice(half));
   }
 
-  return itineraray;
+  return itinerary;
+}
+
+function getDailyTimes({
+  startTime,
+  endTime,
+}: {
+  startTime: string;
+  endTime: string;
+}) {
+  const start = transformTimeToMinutes(startTime);
+  const end = transformTimeToMinutes(endTime);
+  return end - start;
 }

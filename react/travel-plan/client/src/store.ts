@@ -117,6 +117,7 @@ interface ModalState {
 type ModalAction = {
   openModal: (modal: FunctionComponent<{ onClose: () => void }>) => void;
   closeModal: (index: number) => void;
+  clearModals: () => void;
 };
 
 export const useModalStore = create<ModalState & ModalAction>()((set) => ({
@@ -126,4 +127,5 @@ export const useModalStore = create<ModalState & ModalAction>()((set) => ({
   openModal: (modal) => set((state) => ({ modals: [...state.modals, modal] })),
   closeModal: (index) =>
     set((state) => ({ modals: state.modals.filter((_, i) => i !== index) })),
+  clearModals: () => set({ modals: [] }),
 }));

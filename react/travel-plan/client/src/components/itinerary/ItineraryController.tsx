@@ -1,17 +1,19 @@
-import { PlanState, usePlanStore } from "@/store";
+import { usePlanStore } from "@/store";
 import ControllerHeader from "../shared/ControllerHeader";
 import Tabs from "../common/Tabs";
 import DayItineraryView from "./DayItineraryView";
+import ItineraryMapContainer from "./ItineraryMapContainer";
+import { ItineraryItem } from "@/types";
 
 interface Props {
-  itinerary: PlanState["plannedPlaces"][];
+  itinerary: ItineraryItem[][];
 }
 
 export default function ItineraryController({ itinerary }: Props) {
-  const { startDate, endDate } = usePlanStore();
+  const { startDate, endDate, plannedAccommodations } = usePlanStore();
   return (
     <div className="h-full flex">
-      <Tabs
+      <Tabs className="h-full flex-1"
         tabs={itinerary.map((day, index) => ({
           title: `${index + 1}일차`,
           content: () => (
@@ -20,6 +22,11 @@ export default function ItineraryController({ itinerary }: Props) {
                 <ControllerHeader startDate={startDate} endDate={endDate} />
                 <DayItineraryView plannedPlaces={day} />
               </div>
+              {/* 지도 */}
+              <ItineraryMapContainer
+                plannedPlaces={day}
+                accommodation={plannedAccommodations[index]!}
+              />
             </div>
           ),
         }))}
