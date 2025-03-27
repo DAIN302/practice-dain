@@ -26,6 +26,9 @@ export default function useGetSongs() {
                     genre:string;
                 }
             }>(GET_SONGS);
-        }
+
+            return data.songs;
+        },
+        throwOnError : true, // error 발생 시 error 던져주는 설정, error boundary 를 사용해서 에러 발생 시 catch 가능
     })
 }
