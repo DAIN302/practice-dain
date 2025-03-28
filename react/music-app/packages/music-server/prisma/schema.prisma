@@ -13,10 +13,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Artist {
+  id Int @id @default(autoincrement())
+  name String
+  albums Album[]
+}
+
+model Album {
+  id Int @id @default(autoincrement())
+  title String
+  releaseDate DateTime
+  artist Artist @relation(fields: [artistId], references: [id])
+  artistId Int
+  songs Song[] 
+}
+
 model Song {
   id Int @id @default(autoincrement())
   title String
-  artist String
-  genre String
+  genres Genre[] @relation("SongToGenre") // n:n 관계이므로 중간테이블 지정
+  album Album @relation(fields: [albumId], references: [id])
+  albumId Int
   createdAt DateTime @default(now())
+}
+
+model Genre {
+  id Int @id @default(autoincrement())
+  name String
+  songs Song[] @relation("SongToGenre") // n:n 관계이므로 중간테이블 지정
 }
