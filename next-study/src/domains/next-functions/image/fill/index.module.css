@@ -1,0 +1,17 @@
+.grid {
+  width: 100vw;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: 150vw 150vw;
+}
+
+.grid > div {
+  position: relative;
+}
+
+@media screen and (min-width: 750px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 75vw;
+  }
+}
