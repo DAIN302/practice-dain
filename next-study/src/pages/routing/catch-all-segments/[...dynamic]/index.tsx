@@ -28,7 +28,7 @@ const CatchAllSegments:FC<Props> = (props) => {
         <main>
             <h1>CATCH-ALL-SEGMENTS</h1>
             <ol>
-                {props.params?.map((item) => <li>{item}</li>)}
+                {props.params?.map((item) => <li key={item}>{item}</li>)}
             </ol>
         </main>
     )
