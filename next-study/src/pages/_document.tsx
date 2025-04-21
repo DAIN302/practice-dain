@@ -5,6 +5,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head />
+      {/* head 컴포넌트에서 작성한 내용이 Head 에 들어감 */}
       <body>
         <Main />
         <NextScript />
