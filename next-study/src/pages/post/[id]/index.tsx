@@ -28,7 +28,9 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
 
   return {
     paths: paths,
-    fallback: false,
+    // fallback: false, // 미리 준비되지 않은 페이지 Not Found
+    // fallback: 'blocking', // 요청 시 페이지 생성 및 데이터가 준비될 때까지 응답 대기
+    fallback: true, // 요청 시 페이지 생성 및 페이지 선 응답, 데이터가 준비되면 반환
   };
 };
 
@@ -72,3 +74,6 @@ export default PostDetailPage;
 // fallback 옵션을 사용하면 
 // getStaticPaths 에서 미리 생성하지 않은 페이지 생성 처리 및 캐싱
 // 첫 요청 시 페이지 생성, 이후 요청은 캐싱된 페이지 응답
+// false : 미리 준비되지 않은 페이지 Not Found
+// blocking : 요청 시 페이지 생성 및 데이터가 준비될 때까지 응답 대기
+// true : 요청 시 페이지 생성 및 페이지 선 응답, 데이터가 준비되면 반환
